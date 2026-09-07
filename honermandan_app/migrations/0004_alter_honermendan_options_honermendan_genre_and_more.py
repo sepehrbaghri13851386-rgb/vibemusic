@@ -18,11 +18,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='honermendan',
-            name='genre',
-            field=models.ForeignKey(blank=True, help_text='سبک آهنگ را انتخاب کنید (مثلاً ترپ، پاپ، اولد و...)', null=True, on_delete=django.db.models.deletion.SET_NULL, to='genres_app.genre', verbose_name='ژانر / سبک'),
-        ),
-        migrations.AddField(
-            model_name='honermendan',
             name='genre_choice',
             field=models.CharField(blank=True, choices=[('pop', 'پاپ'), ('rap', 'رپ'), ('rock', 'راک'), ('trap', 'ترپ'), ('old', 'اولد'), ('electronic', 'الکترونیک'), ('jazz', 'جاز'), ('rnb', 'آر اند بی'), ('hiphop', 'هیپ هاپ'), ('latin', 'لاتین'), ('indie', 'ایندی'), ('other', 'دیگر')], help_text='سبک آهنگ را از لیست انتخاب کنید', max_length=20, null=True, verbose_name='سبک (چند حرفه\u200cای)'),
         ),

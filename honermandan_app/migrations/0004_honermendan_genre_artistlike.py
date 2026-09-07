@@ -11,6 +11,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='honermendan',
+            name='genre',
+            field=models.ForeignKey(blank=True, help_text='سبک این آهنگ را انتخاب کن (مثلاً ترپ، پاپ، قدیمی...)', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='tracks', to='genres_app.genre', verbose_name='سبک موسیقی'),
+        ),
         migrations.CreateModel(
             name='ArtistLike',
             fields=[

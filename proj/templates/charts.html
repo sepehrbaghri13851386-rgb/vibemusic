@@ -1,0 +1,617 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>Charts | Vibe Music - Music Web App</title>
+<meta name="description" content="Responsive, Bootstrap, BS4">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* { font-family: 'Poppins', sans-serif !important; }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #0a0a14;
+}
+
+.page-wrapper-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("{% static 'assets/img/wp15899524.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0;
+}
+
+.page-wrapper-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
+}
+
+#main, #content, .page-content, .padding {
+    position: relative;
+    z-index: 2;
+}
+
+#header {
+    background: rgba(10, 10, 20, 0.7) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(247, 151, 30, 0.15);
+}
+
+.navbar-brand {
+    color: #fff !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.navbar-brand span {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.7) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #f7971e !important;
+    background: rgba(247, 151, 30, 0.08) !important;
+    border-radius: 8px;
+}
+
+.page-hero {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.page-hero .media-content {
+    min-height: 280px;
+    background-image: url("{% static 'assets/img/wp15899524.jpg' %}") !important;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.page-hero .media-content::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
+}
+
+.page-hero .pos-rlt {
+    position: relative;
+    z-index: 2;
+    padding: 50px 20px;
+}
+
+.page-hero h1 {
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 3rem;
+    background: linear-gradient(135deg, #f7971e, #ffd200, #f7971e);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmerGold 3s ease-in-out infinite;
+}
+
+@keyframes shimmerGold {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.section-title {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title span:first-child {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-title .line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to left, #f7971e, transparent);
+}
+
+.text-highlight {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.track-item {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid rgba(255,255,255,0.04);
+}
+
+.track-item:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-5px);
+    border-color: rgba(247, 151, 30, 0.2);
+}
+
+.track-item .track-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.15);
+}
+
+.track-item .track-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.track-item .track-artist {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+}
+
+.play-btn-small {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(247, 151, 30, 0.3);
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.play-btn-small:hover:not(:disabled) {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #1a1a2e;
+    border-color: #f7971e;
+}
+
+.play-btn-small:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.footer-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.2);
+}
+
+.footer-logo span {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 400;
+}
+
+.footer-links a:hover {
+    color: #f7971e !important;
+}
+
+.footer-copy {
+    text-align: center;
+    padding: 15px 0;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 10px;
+}
+
+.custom-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(10, 10, 20, 0.92);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 15px 20px;
+    border-top: 2px solid #f7971e;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.custom-player.active {
+    display: block;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-player {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+    background: none;
+    border: none;
+}
+
+.close-player:hover {
+    color: #f7971e;
+    transform: rotate(90deg);
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.player-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.3);
+}
+
+.player-info .track-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.player-info .artist-name {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+}
+
+.btn-outline-light {
+    border-color: rgba(255,255,255,0.2) !important;
+    color: rgba(255,255,255,0.7) !important;
+}
+
+.btn-outline-light:hover {
+    background: rgba(247, 151, 30, 0.15) !important;
+    border-color: #f7971e !important;
+    color: #f7971e !important;
+}
+
+@media (max-width: 768px) {
+    .page-hero h1 { font-size: 2rem; }
+    .section-title { font-size: 1.1rem; }
+    .footer-horizontal { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body class="layout-column">
+
+<div class="page-wrapper-bg"></div>
+
+<header id="header" class="page-header scroll-header fixed">
+    <div class="navbar navbar-expand-lg">
+        <a href="{% url 'home' %}" class="navbar-brand text-white">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
+        </a>
+        <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+            <ul class="navbar-nav" data-nav>
+                <li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
+                <li class="nav-item"><a href="{% url 'charts' %}" class="nav-link active"><span class="nav-text">Charts</span></a></li>
+                <li class="nav-item"><a href="{% url 'genres' %}" class="nav-link"><span class="nav-text">Genres</span></a></li>
+                <li class="nav-item"><a href="{% url 'artists' %}" class="nav-link"><span class="nav-text">Artists</span></a></li>
+                <li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
+            </ul>
+            <form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
+                <span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span>
+                <input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off" style="color:#fff;">
+            </form>
+        </div>
+        <ul class="nav navbar-menu order-1 order-lg-2">
+            <li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
+            {% if auth_user %}
+            <li class="nav-item d-flex align-items-center">
+                <a href="{% url 'profile' %}" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color" style="text-decoration:none;">
+                    <span class="avatar w-24">
+                        {% if auth_user.profile_image %}
+                        <img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+                        {% else %}
+                        <img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+                        {% endif %}
+                    </span>
+                    <span class="hidden-folded d-inline mx-2 text-white">{{ auth_user.username }}</span>
+                </a>
+                <a href="{% url 'logout' %}" class="nav-link" style="color:#f7971e;font-size:13px;white-space:nowrap;">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
+            <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
+            {% endif %}
+            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+        </ul>
+    </div>
+</header>
+
+<div id="main" class="layout-row flex">
+    <div id="content" class="flex">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+
+                <div class="page-hero page-container">
+                    <div class="media bg-media"><div class="media-content"></div></div>
+                    <div class="p-5 pos-rlt text-center">
+                        <h1 class="display-3 font-weight-bold mb-5 mx-5">🎵 Weekly Top Charts</h1>
+                    </div>
+                </div>
+
+                {% if top_artists %}
+                <div class="section-title">
+                    <span>🏆 Top Artists</span>
+                    <span class="line"></span>
+                </div>
+                <div class="row mb-5">
+                    {% for artist in top_artists %}
+                    <div class="col-6 col-md-3">
+                        <a href="{% url 'artist_detail' artist_id=artist.id %}" class="text-inherit text-decoration-none">
+                            <div class="text-center p-3" style="background:rgba(255,255,255,0.04);border-radius:12px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);transition:0.3s;">
+                                <div class="avatar w-64 mb-2">
+                                    <img src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}" class="rounded-circle" style="width:64px;height:64px;object-fit:cover;border:3px solid rgba(247,151,30,0.2);">
+                                </div>
+                                <div class="text-white font-weight-bold">{{ artist.name }}</div>
+                                <div class="text-muted text-sm">❤ {{ artist.like_count }} Likes</div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if top_tracks %}
+                <div class="section-title">
+                    <span>🎶 Top Tracks</span>
+                    <span class="line"></span>
+                </div>
+                <div class="row">
+                    {% for item in top_tracks %}
+                    <div class="col-12 col-md-6">
+                        <div class="track-item track-item-data" 
+                             data-source="{% if item.track.audio %}{{ item.track.audio.url }}{% endif %}"
+                             data-track-name="{{ item.track.name_track }}"
+                             data-artist-name="{{ item.track.name }}"
+                             data-image="{% if item.track.image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}">
+                            <img src="{% if item.track.image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ item.track.name_track }}" class="track-img">
+                            <div class="track-info">
+                                <div class="track-name">{{ item.track.name_track }}</div>
+                                <div class="track-artist">{{ item.track.name }}</div>
+                            </div>
+                            <button class="play-btn-small play-btn" {% if not item.track.audio %}disabled{% endif %}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="text-muted text-center py-5" style="color:rgba(255,255,255,0.3) !important;">
+                    <p>🎵 More charts coming soon...</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="page-container">
+        <div class="footer-horizontal">
+            <div class="footer-logo">
+                <a href="{% url 'home' %}" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+                    <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music">
+                    <span>Vibe Music</span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="{% url 'artists' %}">Artists</a>
+                <a href="{% url 'charts' %}">Charts</a>
+                <a href="{% url 'genres' %}">Genres</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'blog:blog_list' %}">Blog</a>
+            </div>
+            <div class="footer-social" style="display:flex;gap:15px;align-items:center;">
+                <a href="https://instagram.com/sepi__en" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                <a href="https://t.me/sepi_en" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#26A5E4'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3L9 13M21 3l-7 18-3-8-8-3z"/></svg></a>
+                <a href="https://wa.me/989928784959" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+            </div>
+        </div>
+        <div class="footer-copy">© 2025 Vibe Music. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<div class="custom-player" id="customPlayer">
+    <button class="close-player" id="closePlayer">✕</button>
+    <div class="player-container">
+        <div class="player-info">
+            <img id="playerImage" src="" alt="Album">
+            <div>
+                <div class="track-name" id="playerTrackName">Track Name</div>
+                <div class="artist-name" id="playerArtistName">Artist Name</div>
+            </div>
+        </div>
+        <audio id="playerAudio" controls>
+            <source src="" type="audio/mpeg">
+            Your browser does not support audio playback.
+        </audio>
+    </div>
+</div>
+
+<script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'libs/popper.js/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'libs/pjax/pjax.min.js' %}"></script>
+<script src="{% static 'assets/js/ajax.js' %}"></script>
+<script src="{% static 'assets/js/lazyload.config.js' %}"></script>
+<script src="{% static 'assets/js/lazyload.js' %}"></script>
+<script src="{% static 'assets/js/plugin.js' %}"></script>
+<script src="{% static 'libs/scrollreveal/dist/scrollreveal.min.js' %}"></script>
+<script src="{% static 'libs/slick-carousel/slick/slick.min.js' %}"></script>
+<script src="{% static 'libs/feather-icons/dist/feather.min.js' %}"></script>
+<script src="{% static 'assets/js/theme.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+
+const player = document.getElementById('customPlayer');
+const audio = document.getElementById('playerAudio');
+const trackName = document.getElementById('playerTrackName');
+const artistName = document.getElementById('playerArtistName');
+const playerImage = document.getElementById('playerImage');
+const closeBtn = document.getElementById('closePlayer');
+
+let currentTrackId = null;
+
+function playTrack(source, name, artist, image) {
+    if (!source) { alert('⚠️ Audio file not available!'); return; }
+    audio.src = source;
+    trackName.textContent = name || 'Unknown';
+    artistName.textContent = artist || 'Unknown Artist';
+    playerImage.src = image || '{% static "assets/img/a0.jpg" %}';
+    player.classList.add('active');
+    audio.load();
+    audio.play().catch(e => console.error(e));
+}
+
+function stopTrack() {
+    audio.pause();
+    audio.currentTime = 0;
+    player.classList.remove('active');
+    currentTrackId = null;
+}
+
+closeBtn.addEventListener('click', stopTrack);
+
+document.querySelectorAll('.play-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        const trackItem = this.closest('.track-item-data');
+        if (!trackItem) return;
+        const source = trackItem.getAttribute('data-source');
+        const name = trackItem.getAttribute('data-track-name');
+        const artist = trackItem.getAttribute('data-artist-name');
+        const image = trackItem.getAttribute('data-image');
+        const trackId = name + '_' + artist;
+        if (currentTrackId === trackId && player.classList.contains('active')) {
+            stopTrack();
+            return;
+        }
+        playTrack(source, name, artist, image);
+        currentTrackId = trackId;
+    });
+});
+
+audio.addEventListener('ended', stopTrack);
+</script>
+</body>
+</html>

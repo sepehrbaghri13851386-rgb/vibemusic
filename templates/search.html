@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search: {{ query }} | Vibe Music{% endblock %}
+
+{% block content %}
+<div class="page-container" style="padding-top:80px;">
+    <div class="heading pt-3 pb-3 d-flex">
+        <div>
+            {% if query %}
+            <h5 class="text-highlight">🔍 Search Results for "{{ query }}"</h5>
+            {% else %}
+            <h5 class="text-highlight">🔍 Search Songs and Artists</h5>
+            {% endif %}
+        </div>
+        <span class="flex"></span>
+    </div>
+
+    {% if query %}
+        <!-- هنرمندان یافت شده -->
+        {% if artists %}
+        <div class="mb-4">
+            <h6 style="color:rgba(255,255,255,0.6);margin-bottom:15px;">👤 Artists ({{ artists|length }})</h6>
+            <div class="row">
+                {% for artist in artists %}
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <a href="{% url 'artist_detail' artist_id=artist.id %}" class="text-decoration-none" style="display:block;background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+                        <div style="aspect-ratio:1;overflow:hidden;">
+                            {% if artist.image %}
+                            <img src="{{ artist.image.url }}" alt="{{ artist.name }}" style="width:100%;height:100%;object-fit:cover;">
+                            {% else %}
+                            <div style="width:100%;height:100%;background:linear-gradient(135deg,#f7971e,#ffd200);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;">🎵</div>
+                            {% endif %}
+                        </div>
+                        <div style="padding:10px;text-align:center;">
+                            <div style="color:#fff;font-weight:600;">{{ artist.name }}</div>
+                            <div style="color:rgba(255,255,255,0.5);font-size:0.85rem;">{{ artist.track_count }} Tracks</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <hr style="border-color:rgba(255,255,255,0.08);margin:20px 0;">
+        {% endif %}
+
+        <!-- آهنگ‌های یافت شده -->
+        {% if tracks %}
+        <div class="mb-4">
+            <h6 style="color:rgba(255,255,255,0.6);margin-bottom:15px;">🎵 Tracks ({{ tracks|length }})</h6>
+            <div class="row row-md">
+                {% for item in tracks %}
+                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                    <div style="background:rgba(255,255,255,0.05);border-radius:12px;overflow:hidden;">
+                        <a href="{% url 'artist_detail' artist_id=item.id %}" style="display:block;text-decoration:none;">
+                            <div style="position:relative;aspect-ratio:1;overflow:hidden;">
+                                {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name_track }}" style="width:100%;height:100%;object-fit:cover;">
+                                {% else %}
+                                <div style="width:100%;height:100%;background:linear-gradient(135deg,#f7971e,#ffd200);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;">🎵</div>
+                                {% endif %}
+                                {% if item.audio %}
+                                <div class="media-action-overlay" style="position:absolute;top:0;left:0;right:0;bottom:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);opacity:0;transition:opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0">
+                                    <button class="btn-play" style="width:50px;height:50px;border-radius:50%;background:#f7971e;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 15px rgba(247,151,30,0.4);" onclick="event.preventDefault();event.stopPropagation();togglePlay(this,'{{ item.audio.url }}')">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+                                    </button>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <div style="padding:10px;">
+                            <div style="color:#fff;font-weight:600;font-size:0.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ item.name_track }}</div>
+                            <div style="color:rgba(255,255,255,0.5);font-size:0.85rem;">{{ item.name }}</div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if not artists and not tracks %}
+        <div style="text-align:center;padding:60px 20px;">
+            <div style="font-size:3rem;margin-bottom:15px;">🔍</div>
+            <h5 style="color:rgba(255,255,255,0.6);">No results found</h5>
+            <p style="color:rgba(255,255,255,0.4);">No results found for "{{ query }}". Try a different keyword.</p>
+        </div>
+        {% endif %}
+
+    {% else %}
+        <div style="text-align:center;padding:60px 20px;">
+            <div style="font-size:3rem;margin-bottom:15px;">🔍</div>
+            <h5 style="color:rgba(255,255,255,0.6);">Search for a song or artist name</h5>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+var currentAudio = null;
+var currentBtn = null;
+
+function togglePlay(btn, src) {
+    if (currentAudio && currentBtn === btn) {
+        currentAudio.pause();
+        currentAudio = null;
+        currentBtn = null;
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>';
+        return;
+    }
+    if (currentAudio) {
+        currentAudio.pause();
+        currentBtn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>';
+    }
+    var audio = new Audio(src);
+    audio.play();
+    currentAudio = audio;
+    currentBtn = btn;
+    btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    audio.onended = function() {
+        btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>';
+        currentAudio = null;
+        currentBtn = null;
+    };
+}
+</script>
+{% endblock %}

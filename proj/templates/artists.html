@@ -1,0 +1,816 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>{{ artist.name }} | Vibe Music - Music Web App</title>
+<meta name="description" content="Details for {{ artist.name }}">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* { font-family: 'Poppins', sans-serif !important; }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #0a0a14;
+}
+
+.page-wrapper-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("{% static 'assets/img/wp15899524.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0;
+}
+
+.page-wrapper-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
+}
+
+#main, #content, .page-content, .padding {
+    position: relative;
+    z-index: 2;
+}
+
+#header {
+    background: rgba(10, 10, 20, 0.7) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(247, 151, 30, 0.15);
+}
+
+.navbar-brand {
+    color: #fff !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.navbar-brand span {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.7) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #f7971e !important;
+    background: rgba(247, 151, 30, 0.08) !important;
+    border-radius: 8px;
+}
+
+.text-highlight {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-title {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title span:first-child {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-title .line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to left, #f7971e, transparent);
+}
+
+/* Artist header */
+.artist-header-card {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 18px;
+    padding: 36px 40px;
+    margin-bottom: 40px;
+}
+
+.artist-avatar-wrapper {
+    flex-shrink: 0;
+}
+
+.artist-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(247, 151, 30, 0.35);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    display: block;
+}
+
+.artist-header-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.artist-name-detail {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.artist-badge {
+    background: rgba(247, 151, 30, 0.15);
+    color: #f7971e;
+    border: 1px solid rgba(247, 151, 30, 0.3);
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.btn-like {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 13px !important;
+    padding: 6px 18px !important;
+    border-radius: 20px !important;
+    transition: all 0.3s ease !important;
+}
+
+.btn-like:hover {
+    background: rgba(247, 151, 30, 0.2) !important;
+    border-color: #f7971e !important;
+    color: #f7971e !important;
+}
+
+.btn-like.liked {
+    background: linear-gradient(135deg, #f7971e, #ffd200) !important;
+    border-color: #f7971e !important;
+    color: #1a1a2e !important;
+}
+
+@media (max-width: 576px) {
+    .artist-header-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px 20px;
+    }
+    .artist-avatar {
+        width: 100px;
+        height: 100px;
+    }
+    .artist-name-detail {
+        font-size: 1.6rem;
+    }
+}
+
+/* Track item */
+.track-item-detail {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.track-item-detail:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(247, 151, 30, 0.25);
+    transform: translateX(5px);
+}
+
+.track-number {
+    color: rgba(255,255,255,0.3);
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 28px;
+    text-align: center;
+}
+
+.track-cover {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.15);
+    flex-shrink: 0;
+}
+
+.track-info {
+    flex: 1;
+}
+
+.track-name-detail {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.track-artist-detail {
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+}
+
+.play-btn-detail {
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(247, 151, 30, 0.3);
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.play-btn-detail:hover:not(:disabled) {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #1a1a2e;
+    border-color: #f7971e;
+}
+
+.play-btn-detail:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.play-btn-detail.playing {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #1a1a2e;
+    border-color: #f7971e;
+}
+
+.back-btn {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    transition: 0.3s;
+    display: inline-block;
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    background: rgba(247, 151, 30, 0.2);
+    color: #f7971e;
+}
+
+/* Comments */
+.comment-box {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+}
+
+.comment-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.comment-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.2);
+}
+
+.comment-username {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.comment-username.admin {
+    color: #f7971e;
+}
+
+.comment-time {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
+}
+
+.comment-text {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 0 12px 0;
+}
+
+.reply-box {
+    background: rgba(247, 151, 30, 0.05);
+    border-right: 3px solid #f7971e;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.reply-username {
+    color: #f7971e;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.reply-text {
+    color: rgba(255,255,255,0.6);
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.reply-btn {
+    background: none;
+    border: none;
+    color: #f7971e;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 0;
+    transition: 0.3s;
+}
+
+.reply-btn:hover {
+    color: #ffd200;
+}
+
+textarea.comment-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 14px;
+    color: #fff;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    transition: 0.3s;
+}
+
+textarea.comment-input:focus {
+    border-color: rgba(247, 151, 30, 0.4);
+    background: rgba(255,255,255,0.08);
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color: #1a1a2e;
+    border: none;
+    padding: 10px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 20px rgba(247, 151, 30, 0.3);
+}
+
+/* Footer */
+.footer-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.2);
+}
+
+.footer-logo span {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 400;
+}
+
+.footer-links a:hover {
+    color: #f7971e !important;
+}
+
+.footer-copy {
+    text-align: center;
+    padding: 15px 0;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 10px;
+}
+
+/* Player */
+.custom-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(10, 10, 20, 0.92);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    padding: 15px 20px;
+    border-top: 2px solid #f7971e;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.6);
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.custom-player.active {
+    display: block;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close-player {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+    background: none;
+    border: none;
+}
+
+.close-player:hover {
+    color: #f7971e;
+    transform: rotate(90deg);
+}
+
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.player-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.3);
+}
+
+.player-info .track-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.player-info .artist-name {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+}
+
+.empty-state {
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 50px 0;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .section-title { font-size: 1.1rem; }
+    .footer-horizontal { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body class="layout-column">
+
+<div class="page-wrapper-bg"></div>
+
+<header id="header" class="page-header fixed">
+    <div class="navbar navbar-expand-lg">
+        <a href="{% url 'home' %}" class="navbar-brand text-white">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
+        </a>
+        <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+            <ul class="navbar-nav" data-nav>
+                <li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
+                <li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><span class="nav-text">Charts</span></a></li>
+                <li class="nav-item"><a href="{% url 'genres' %}" class="nav-link"><span class="nav-text">Genres</span></a></li>
+                <li class="nav-item"><a href="{% url 'artists' %}" class="nav-link active"><span class="nav-text">Artists</span></a></li>
+                <li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
+            </ul>
+            <form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
+                <span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span>
+                <input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off" style="color:#fff;">
+            </form>
+        </div>
+        <ul class="nav navbar-menu order-1 order-lg-2">
+            <li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
+            {% if auth_user %}
+            <li class="nav-item d-flex align-items-center">
+                <a href="{% url 'profile' %}" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color" style="text-decoration:none;">
+                    <span class="avatar w-24">
+                        {% if auth_user.profile_image %}
+                        <img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+                        {% else %}
+                        <img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+                        {% endif %}
+                    </span>
+                    <span class="hidden-folded d-inline mx-2 text-white">{{ auth_user.username }}</span>
+                </a>
+                <a href="{% url 'logout' %}" class="nav-link" style="color:#f7971e;font-size:13px;white-space:nowrap;">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
+            <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
+            {% endif %}
+            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+        </ul>
+    </div>
+</header>
+
+<div id="main" class="layout-row flex">
+    <div id="content" class="flex">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+
+                <!-- Back button -->
+                <a href="{% url 'artists' %}" class="back-btn">← Back to Artists</a>
+
+                <!-- Artist header -->
+                <div class="artist-header-card">
+                    <div class="artist-avatar-wrapper">
+                        {% if artist.image %}
+                            <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-avatar">
+                        {% else %}
+                            <img src="{% static 'assets/img/a0.jpg' %}" alt="{{ artist.name }}" class="artist-avatar">
+                        {% endif %}
+                    </div>
+                    <div class="artist-header-info">
+                        <h1 class="artist-name-detail">{{ artist.name }}</h1>
+                        <span class="artist-badge">🎵 Artist</span>
+                        <p class="text-muted mt-2 mb-0" style="color:rgba(255,255,255,0.4) !important;">
+                            {% if tracks %}
+                                {{ tracks|length }} Tracks
+                            {% else %}
+                                No tracks released yet
+                            {% endif %}
+                        </p>
+                        <form method="post" action="{% url 'toggle_artist_like' artist_id=artist.id %}" class="mt-3">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-like {% if liked_by_user %}liked{% endif %}">
+                                {% if liked_by_user %}❤ Liked{% else %}♡ Like{% endif %}
+                                <span class="mx-1">({{ like_count }})</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Song list -->
+                <div class="section-title">
+                    <span>🎶 Tracks</span>
+                    <span class="line"></span>
+                </div>
+
+                {% if tracks %}
+                    {% for track in tracks %}
+                    <div class="track-item-detail track-item" 
+                         data-id="track-{{ track.id }}" 
+                         data-source="{% if track.audio %}{{ track.audio.url }}{% endif %}" 
+                         data-track-name="{{ track.name_track }}" 
+                         data-artist-name="{{ track.name }}" 
+                         data-image="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}">
+                        
+                        <span class="track-number">{{ forloop.counter }}</span>
+
+                        <img src="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}"
+                             alt="{{ track.name_track }}" class="track-cover">
+
+                        <div class="track-info">
+                            <div class="track-name-detail">{{ track.name_track }}</div>
+                            <div class="track-artist-detail">{{ track.name }}</div>
+                        </div>
+
+                        <button class="play-btn-detail play-btn" 
+                                {% if not track.audio %}disabled title="Audio file not uploaded"{% endif %}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <p>😔 No tracks available for this artist</p>
+                    </div>
+                {% endif %}
+
+                <!-- Comments section -->
+                <div style="margin-top:50px;">
+                    <div class="section-title">
+                        <span>💬 Comments ({{ comment_count }})</span>
+                        <span class="line"></span>
+                    </div>
+
+                    <!-- Comment form -->
+                    {% if auth_user %}
+                    <form method="post" action="{% url 'artist_detail' artist_id=artist.id %}" style="margin-bottom:30px;">
+                        {% csrf_token %}
+                        <textarea name="comment_text" rows="3" placeholder="Write your comment..." required class="comment-input"></textarea>
+                        <button type="submit" class="btn-submit">Post Comment</button>
+                    </form>
+                    {% else %}
+                    <div style="background:rgba(255,255,255,0.04);border-radius:12px;padding:20px;text-align:center;margin-bottom:30px;">
+                        <p class="text-muted mb-2" style="color:rgba(255,255,255,0.4) !important;">Please sign in to post a comment</p>
+                        <a href="{% url 'signin' %}" style="color:#f7971e;text-decoration:none;font-weight:600;">Sign In</a>
+                    </div>
+                    {% endif %}
+
+                    <!-- Comment list -->
+                    {% for comment in comments %}
+                    <div class="comment-box">
+                        <div class="comment-user">
+                            {% if comment.user.profile_image %}
+                                <img src="{{ comment.user.profile_image.url }}" alt="" class="comment-avatar">
+                            {% else %}
+                                <div style="width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#aaa;font-size:16px;">👤</div>
+                            {% endif %}
+                            <div>
+                                <span class="comment-username {% if comment.user.is_admin %}admin{% endif %}">
+                                    {{ comment.user.username }}
+                                    {% if comment.user.is_admin %}<span style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;font-size:10px;padding:2px 8px;border-radius:8px;margin-right:6px;font-weight:600;">Admin</span>{% endif %}
+                                </span>
+                                <div class="comment-time">{{ comment.created_at|timesince }} ago</div>
+                            </div>
+                        </div>
+                        <p class="comment-text">{{ comment.text }}</p>
+
+                        <!-- Admin reply -->
+                        {% for reply in comment.replies.all %}
+                        <div class="reply-box">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+                                {% if reply.user.profile_image %}
+                                    <img src="{{ reply.user.profile_image.url }}" alt="" style="width:30px;height:30px;border-radius:50%;object-fit:cover;border:2px solid #f7971e;">
+                                {% else %}
+                                    <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#f7971e,#ffd200);display:flex;align-items:center;justify-content:center;color:#1a1a2e;font-size:12px;font-weight:600;">A</div>
+                                {% endif %}
+                                <div>
+                                    <span class="reply-username">
+                                        {{ reply.user.username }}
+                                        <span style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;font-size:9px;padding:2px 8px;border-radius:8px;margin-right:4px;font-weight:600;">Admin</span>
+                                    </span>
+                                    <div class="comment-time">{{ reply.created_at|timesince }} ago</div>
+                                </div>
+                            </div>
+                            <p class="reply-text">{{ reply.text }}</p>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Reply button (Admin only) -->
+                        {% if is_admin %}
+                        <div id="reply-form-{{ comment.id }}" style="display:none;margin-top:10px;margin-right:20px;">
+                            <form method="post" action="{% url 'artist_detail' artist_id=artist.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                <textarea name="comment_text" rows="2" placeholder="Reply to {{ comment.user.username }}..." required class="comment-input" style="font-size:13px;padding:10px;"></textarea>
+                                <div style="display:flex;gap:8px;margin-top:8px;">
+                                    <button type="submit" class="btn-submit" style="padding:8px 20px;font-size:13px;">Reply</button>
+                                    <button type="button" onclick="document.getElementById('reply-form-{{ comment.id }}').style.display='none'" style="background:rgba(255,255,255,0.1);color:#aaa;border:none;padding:8px 16px;border-radius:8px;font-size:13px;cursor:pointer;">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                        <button class="reply-btn" onclick="document.getElementById('reply-form-{{ comment.id }}').style.display='block'">✏️ Reply</button>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <div style="text-align:center;padding:30px 0;color:rgba(255,255,255,0.3);">No comments yet</div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="page-container">
+        <div class="footer-horizontal">
+            <div class="footer-logo">
+                <a href="{% url 'home' %}" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+                    <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music">
+                    <span>Vibe Music</span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="{% url 'artists' %}">Artists</a>
+                <a href="{% url 'charts' %}">Charts</a>
+                <a href="{% url 'genres' %}">Genres</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'blog:blog_list' %}">Blog</a>
+            </div>
+            <div class="footer-social" style="display:flex;gap:15px;align-items:center;">
+                <a href="https://instagram.com/sepi__en" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                <a href="https://t.me/sepi_en" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#26A5E4'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3L9 13M21 3l-7 18-3-8-8-3z"/></svg></a>
+                <a href="https://wa.me/989928784959" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+            </div>
+        </div>
+        <div class="footer-copy">© 2025 Vibe Music. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<!-- Player -->
+<div class="custom-player" id="customPlayer">
+    <button class="close-player" id="closePlayer">✕</button>
+    <div class="player-container">
+        <div class="player-info">
+            <img id="

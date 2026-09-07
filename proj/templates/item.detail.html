@@ -1,0 +1,347 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>Details | Vibe Music - Web Music App</title>
+<meta name="description" content="Responsive, Bootstrap, BS4">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+</head>
+<body class="layout-column bg-dark">
+<header id="header" class="page-header scroll-header fixed"><div class="navbar navbar-expand-lg">
+<a href="{% url 'home' %}" class="navbar-brand text-white "><img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;"><span class="hidden-folded d-inline l-s-n-1x ">Vibe Music</span></a><div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+<ul class="navbar-nav" data-nav>
+<li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
+<li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><span class="nav-text">Charts</span></a></li>
+<li class="nav-item"><a href="{% url 'genres' %}" class="nav-link"><span class="nav-text">Genres</span></a></li>
+<li class="nav-item"><a href="{% url 'artists' %}" class="nav-link"><span class="nav-text">Artists</span></a></li>
+<li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
+</ul>
+<form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
+<span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span><input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off">
+</form>
+</div>
+<ul class="nav navbar-menu order-1 order-lg-2">
+<li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
+{% if auth_user %}
+<li class="nav-item d-flex align-items-center">
+<a href="{% url 'profile' %}" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color" style="text-decoration:none;">
+<span class="avatar w-24">
+{% if auth_user.profile_image %}
+<img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+{% else %}
+<img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+{% endif %}
+</span>
+<span class="hidden-folded d-inline mx-2 text-white">{{ auth_user.username }}</span>
+</a>
+<a href="{% url 'logout' %}" class="nav-link" style="color:#f5065a;font-size:13px;white-space:nowrap;">Logout</a>
+</li>
+{% else %}
+<li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
+<li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm btn-primary no-ajax" href="{% url 'signup' %}">Sign Up</a></li>
+{% endif %}
+<li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+</ul>
+</div></header><div id="main" class="layout-row flex"><div id="content" class="flex "><div><div class="page-content page-container" id="page-content"><div class="padding sr">
+<div class="page-hero" data-id="1" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/03/78/b5/0378b505-0651-5d37-abaf-fdace32fa0a1/mzaf_4885861497912518049.plus.aac.p.m4a">
+<div class="media bg-media"><div class="media-content" style="background-image:url({% static 'assets/img/b18.jpg' %})"></div></div>
+<div class="pos-rlt text-white">
+<a href="{% url 'artist_detail' %}" class="ajax text-primary h5 subtitle">Alan Hayes</a><h1 class="display-3 font-weight-bold mb-0 text-white title">Have an Old-Fashioned Time</h1>
+<div class="py-4 toolbar align-items-center">
+<button class="btn btn-raised btn-rounded btn-icon gd-primary text-white btn-play" data-toggle-class></button><span class="text-fade">32000</span><button class="btn no-bg btn-icon btn-rounded" data-toggle-class><i data-feather="heart" class="active-solid active-primary"></i></button><span class="text-fade">502</span><button class="btn no-bg btn-icon btn-rounded btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+<div class="mb-2">
+<span class="text-fade">On:</span><a href="{% url 'genres' %}" class="text-white ajax">Classic</a>,<a href="{% url 'genres' %}" class="text-white ajax">World</a>
+</div>
+</div>
+</div>
+<div class="d-md-flex pos-rlt">
+<div class="flex">
+<div class="heading pt-5 pb-3 d-flex ">
+<div>
+<div class="text-muted sr-item">Album</div>
+<h5 class="text-highlight sr-item">Songs</h5>
+</div>
+<span class="flex"></span>
+</div>
+<div class="row list-row list-index">
+<div class="col-12" data-id="442173657" data-category="Rap" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/11/72/7e/11727eb5-b6c6-f80f-ddd9-2fb9135c07b1/mzaf_3150787160306402060.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#442173657" class="ajax media-content " style="background-image:url({% static 'assets/img/c12.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#442173657" class="list-title title ajax h-1x">Sunflower (Spider-Man: Into the Spider-Verse)</a><a href="{% url 'artist_detail' %}#442173657" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Post Malone & Swae Lee</a>
+</div></div>
+<div class="list-action show-row"><div class="d-flex align-items-center">
+<div class="px-3 text-sm text-muted d-none d-md-block">04:33</div>
+<button class="btn btn-icon no-bg no-shadow" data-toggle-class><i data-feather="heart" class="active-primary"></i></button><button class="btn btn-icon no-bg no-shadow btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div></div>
+</div></div>
+<div class="col-12" data-id="435160184" data-category="Dance" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/9c/e6/fd/9ce6fd38-1225-6ac3-f7a6-da80cb50346e/mzaf_1582186890349153418.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#435160184" class="ajax media-content " style="background-image:url({% static 'assets/img/c8.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#435160184" class="list-title title ajax h-1x">Happier</a><a href="{% url 'artist_detail' %}#435160184" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Marshmello & Bastille</a>
+</div></div>
+<div class="list-action show-row"><div class="d-flex align-items-center">
+<div class="px-3 text-sm text-muted d-none d-md-block">03:47</div>
+<button class="btn btn-icon no-bg no-shadow" data-toggle-class><i data-feather="heart" class="active-primary"></i></button><button class="btn btn-icon no-bg no-shadow btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div></div>
+</div></div>
+<div class="col-12" data-id="378918899" data-category="Dance" data-tag="Canada" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/c3/6c/db/c36cdbd0-304b-11b0-128d-eda635333cc8/mzaf_1033589088272334209.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#378918899" class="ajax media-content " style="background-image:url({% static 'assets/img/c20.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#378918899" class="list-title title ajax h-1x">Body</a><a href="{% url 'artist_detail' %}#378918899" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Loud Luxury feat. Brando</a>
+</div></div>
+<div class="list-action show-row"><div class="d-flex align-items-center">
+<div class="px-3 text-sm text-muted d-none d-md-block">04:33</div>
+<button class="btn btn-icon no-bg no-shadow" data-toggle-class><i data-feather="heart" class="active-primary"></i></button><button class="btn btn-icon no-bg no-shadow btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div></div>
+</div></div>
+<div class="col-12" data-id="402107013" data-category="Dance" data-tag="All" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/03/e5/25/03e52558-25b4-e41a-8b0a-c5ee14cf51de/mzaf_7464768196891763269.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#402107013" class="ajax media-content " style="background-image:url({% static 'assets/img/c15.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#402107013" class="list-title title ajax h-1x">Sucker for</a><a href="{% url 'artist_detail' %}#402107013" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Karma Prince</a>
+</div></div>
+<div class="list-action show-row"><div class="d-flex align-items-center">
+<div class="px-3 text-sm text-muted d-none d-md-block">03:31</div>
+<button class="btn btn-icon no-bg no-shadow" data-toggle-class><i data-feather="heart" class="active-primary"></i></button><button class="btn btn-icon no-bg no-shadow btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div></div>
+</div></div>
+<div class="col-12" data-id="442009655" data-category="Pop" data-tag="England" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/07/7e/24/077e2447-0d02-1c40-729b-a4a87e7ecd51/mzaf_3261492558713394996.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#442009655" class="ajax media-content " style="background-image:url({% static 'assets/img/c19.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#442009655" class="list-title title ajax h-1x">Woman Like Me</a><a href="{% url 'artist_detail' %}#442009655" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Little Mix feat. Nicki Minaj</a>
+</div></div>
+<div class="list-action show-row"><div class="d-flex align-items-center">
+<div class="px-3 text-sm text-muted d-none d-md-block">04:32</div>
+<button class="btn btn-icon no-bg no-shadow" data-toggle-class><i data-feather="heart" class="active-primary"></i></button><button class="btn btn-icon no-bg no-shadow btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div></div>
+</div></div>
+</div>
+<div class="heading pt-5 pb-3 d-flex ">
+<div>
+<div class="text-muted sr-item">More</div>
+<h5 class="text-highlight sr-item">Songs</h5>
+</div>
+<span class="flex"></span>
+</div>
+<div class="row list">
+<div class="col-6 col-md-3 mb-5" data-id="430776855" data-category="other" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/bb/45/0e/bb450e27-beb6-6006-3add-b01a40cad68d/mzaf_4073501669713213306.plus.aac.p.m4a"><div class="list-item list-hover r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#430776855" class="ajax media-content " style="background-image:url({% static 'assets/img/c6.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#430776855" class="list-title title ajax h-1x">Natural</a><a href="{% url 'artist_detail' %}#430776855" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Imagine Dragons</a>
+</div></div>
+</div></div>
+<div class="col-6 col-md-3 mb-5" data-id="374705210" data-category="Rap" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/dc/c4/0b/dcc40b4d-283b-e9a2-6209-ca988087cc0e/mzaf_8137717147287964110.plus.aac.p.m4a"><div class="list-item list-hover r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#374705210" class="ajax media-content " style="background-image:url({% static 'assets/img/c22.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#374705210" class="list-title title ajax h-1x">Mo Bamba</a><a href="{% url 'artist_detail' %}#374705210" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Check it out</a>
+</div></div>
+</div></div>
+<div class="col-6 col-md-3 mb-5" data-id="418888835" data-category="other" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/eb/e4/2e/ebe42efd-bbce-75cd-63a2-5813637e25bb/mzaf_6529454398103897146.plus.aac.p.m4a"><div class="list-item list-hover r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#418888835" class="ajax media-content " style="background-image:url({% static 'assets/img/c7.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#418888835" class="list-title title ajax h-1x">High Hopes</a><a href="{% url 'artist_detail' %}#418888835" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Panic! At the Disco</a>
+</div></div>
+</div></div>
+<div class="col-6 col-md-3 mb-5" data-id="435950080" data-category="Dance" data-tag="United Kingdom" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/bd/28/a1/bd28a103-b17f-540a-eae3-9bfe992e2562/mzaf_6343854158099733867.plus.aac.p.m4a"><div class="list-item list-hover r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#435950080" class="ajax media-content " style="background-image:url({% static 'assets/img/c2.jpg' %})"></a><div class="media-action media-action-overlay">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#435950080" class="list-title title ajax h-1x">Promises</a><a href="{% url 'artist_detail' %}#435950080" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Calvin Harris & Sam Smith</a>
+</div></div>
+</div></div>
+</div>
+<div class="card" id="comment-">
+<div class="card-header"><strong>8 Comments</strong></div>
+<div class="card-body d-flex b-b">
+<a href="#"><img src="{% static 'assets/img/a1.jpg' %}" class="avatar w-40"></a><div class="mx-3 flex">
+<div class="mb-3">
+<a href="#">Alan Hayes</a><div class="text-muted text-sm">5:30 PM</div>
+</div>
+<div>
+<p>Time, venom, cartoon told in flattery pregnant for bed and aged for pain</p>
+<button class="btn btn-sm btn-white">Reply</button>
+</div>
+</div>
+</div>
+<div class="card-body d-flex b-b">
+<a href="#"><img src="{% static 'assets/img/a1.jpg' %}" class="avatar w-40"></a><div class="mx-3 flex">
+<div class="mb-3">
+<a href="#">Alan Hayes</a><div class="text-muted text-sm">3:40 PM</div>
+</div>
+<div>
+<p>Lorem ipsum dolor sit amet, consectetur</p>
+<button class="btn btn-sm btn-white">Reply</button>
+</div>
+</div>
+</div>
+<div class="p-4" id="feed-form-"><form>
+<textarea class="form-control" rows="3"></textarea><div class="d-flex justify-content-end mt-3"><button class="btn btn-primary">Submit</button></div>
+</form></div>
+</div>
+</div>
+<div style="min-width: 4rem"></div>
+<div class="w-xl w-auto-sm no-shrink"><div class="sticky">
+<div class="list mb-5"><div class="list-item list-overlay r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#" class="ajax media-content " style="background-image:url({% static 'assets/img/b14.jpg' %})"></a><div class="media-action "></div>
+</div>
+<div class="list-content p-5 text-center"><div class="list-body ">
+<a href="{% url 'item_detail' %}#" class="list-title title ajax h3 font-weight-bold">Hip Hop 100 Chart</a><a href="{% url 'artist_detail' %}#" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Today's hottest rap.</a>
+</div></div>
+</div></div>
+<h6 class="text text-muted sr-item">Top Songs</h6>
+<div class="row list-row">
+<div class="col-12" data-id="434628736" data-category="Pop" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/1d/44/74/1d447462-1811-5cfd-90f7-13edea1193d9/mzaf_5901924055590298818.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#434628736" class="ajax media-content " style="background-image:url({% static 'assets/img/c9.jpg' %})"></a><div class="media-action ">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content "><div class="list-body ">
+<a href="{% url 'item_detail' %}#434628736" class="list-title title ajax h-1x">Thunder Clouds</a><a href="{% url 'artist_detail' %}#434628736" class="list-subtitle d-block text-muted h-1x subtitle ajax ">LSD Feat. Sia & Diplo & Labrinth</a>
+</div></div>
+</div></div>
+<div class="col-12" data-id="438035781" data-category="Dance" data-tag="Netherlands" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/7f/d2/b9/7fd2b937-3565-7d34-ad20-eb820e995933/mzaf_1278318905199991361.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#438035781" class="ajax media-content " style="background-image:url({% static 'assets/img/c26.jpg' %})"></a><div class="media-action ">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content "><div class="list-body ">
+<a href="{% url 'item_detail' %}#438035781" class="list-title title ajax h-1x">Staying Alive</a><a href="{% url 'artist_detail' %}#438035781" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Don Diablo Feat. Emeli Sandé & Gucci Mane</a>
+</div></div>
+</div></div>
+<div class="col-12" data-id="430776855" data-category="other" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/bb/45/0e/bb450e27-beb6-6006-3add-b01a40cad68d/mzaf_4073501669713213306.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#430776855" class="ajax media-content " style="background-image:url({% static 'assets/img/c6.jpg' %})"></a><div class="media-action ">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content "><div class="list-body ">
+<a href="{% url 'item_detail' %}#430776855" class="list-title title ajax h-1x">Natural</a><a href="{% url 'artist_detail' %}#430776855" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Imagine Dragons</a>
+</div></div>
+</div></div>
+<div class="col-12" data-id="427101360" data-category="Pop" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/03/78/b5/0378b505-0651-5d37-abaf-fdace32fa0a1/mzaf_4885861497912518049.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#427101360" class="ajax media-content " style="background-image:url({% static 'assets/img/c0.jpg' %})"></a><div class="media-action ">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content "><div class="list-body ">
+<a href="{% url 'item_detail' %}#427101360" class="list-title title ajax h-1x">Shallow</a><a href="{% url 'artist_detail' %}#427101360" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Lady Gaga & Bradley Cooper</a>
+</div></div>
+</div></div>
+<div class="col-12" data-id="441677734" data-category="Rap" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview128/v4/f0/96/02/f09602fc-40df-8f2e-1a19-e69b7bf746aa/mzaf_4452217425399550549.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#441677734" class="ajax media-content " style="background-image:url({% static 'assets/img/c32.jpg' %})"></a><div class="media-action ">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content "><div class="list-body ">
+<a href="{% url 'item_detail' %}#441677734" class="list-title title ajax h-1x">I'll Use It</a><a href="{% url 'artist_detail' %}#441677734" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Lil Wayne</a>
+</div></div>
+</div></div>
+<div class="col-12" data-id="439575216" data-category="Rap" data-tag="USA" data-source="https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview118/v4/8f/84/bd/8f84bd09-94d3-d6f1-5fca-4b61d7ba135a/mzaf_69877628019454373.plus.aac.p.m4a"><div class="list-item r">
+<div class="media ">
+<a href="{% url 'item_detail' %}#439575216" class="ajax media-content " style="background-image:url({% static 'assets/img/c21.jpg' %})"></a><div class="media-action ">
+<button class="btn btn-icon no-bg no-shadow hide-row" data-toggle-class><i data-feather="heart" class="active-fill"></i></button><button class="btn btn-raised btn-icon btn-rounded bg--white btn-play"></button><button class="btn btn-icon no-bg no-shadow hide-row btn-more" data-toggle="dropdown"><i data-feather="more-horizontal"></i></button><div class="dropdown-menu dropdown-menu-right"></div>
+</div>
+</div>
+<div class="list-content "><div class="list-body ">
+<a href="{% url 'item_detail' %}#439575216" class="list-title title ajax h-1x">Waking Up in the Sky</a><a href="{% url 'artist_detail' %}#439575216" class="list-subtitle d-block text-muted h-1x subtitle ajax ">Gucci Mane, Bruno Mars & Kodak Black</a>
+</div></div>
+</div></div>
+</div>
+</div></div>
+</div>
+</div></div></div></div></div>
+<footer id="footer" class="page-footer">
+<style>
+.footer-horizontal{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:30px 0;border-top:1px solid rgba(255,255,255,0.08);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.1);}
+.footer-logo span{font-size:1.4rem;font-weight:700;color:#fff;}
+.footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+.footer-links a{color:rgba(255,255,255,0.7);font-size:1.05rem;text-decoration:none;transition:color 0.3s;}
+.footer-links a:hover{color:#e94560;}
+.footer-copy{text-align:center;padding:15px 0;color:rgba(255,255,255,0.4);font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.05);margin-top:10px;}
+</style>
+<div class="page-container">
+<div class="footer-horizontal">
+<div class="footer-logo">
+<a href="{% url 'home' %}" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+<img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music">
+<span>Vibe Music</span>
+</a>
+</div>
+<div class="footer-links">
+<a href="{% url 'artists' %}">Artists</a>
+<a href="{% url 'charts' %}">Charts</a>
+<a href="{% url 'genres' %}">Genres</a>
+<a href="{% url 'about' %}">About Us</a>
+<a href="{% url 'blog:blog_list' %}">Blog</a>
+</div>
+<div class="footer-social" style="display:flex;gap:15px;align-items:center;">
+<a href="https://instagram.com/sepi__en" target="_blank" style="color:rgba(255,255,255,0.7);transition:color 0.3s;" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+<a href="https://t.me/sepi_en" target="_blank" style="color:rgba(255,255,255,0.7);transition:color 0.3s;" onmouseover="this.style.color='#26A5E4'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3L9 13M21 3l-7 18-3-8-8-3z"/></svg></a>
+<a href="https://wa.me/989928784959" target="_blank" style="color:rgba(255,255,255,0.7);transition:color 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+</div>
+</div>
+<div class="footer-copy">© 2025 Vibe Music. All rights reserved.</div>
+</div>
+<div data-plugin="plyr" class="plyrist plyrist_audio plyr-list-popup player bg-overlay b-t fixed-bottom" id="plyrist">
+<audio controls hidden></audio><div class="plyr-list bg-dark-overlay" style="display:none"></div>
+</div>
+</footer><script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script><script src="{% static 'libs/popper.js/dist/umd/popper.min.js' %}"></script><script src="{% static 'libs/bootstrap/dist/js/bootstrap.min.js' %}"></script><script src="{% static 'libs/pjax/pjax.min.js' %}"></script><script src="{% static 'assets/js/ajax.js' %}"></script><script src="{% static 'assets/js/lazyload.config.js' %}"></script><script src="{% static 'assets/js/lazyload.js' %}"></script><script src="{% static 'assets/js/plugin.js' %}"></script><script src="{% static 'libs/scrollreveal/dist/scrollreveal.min.js' %}"></script><script src="{% static 'libs/slick-carousel/slick/slick.min.js' %}"></script><script src="{% static 'libs/feather-icons/dist/feather.min.js' %}"></script><script src="{% static 'assets/js/theme.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

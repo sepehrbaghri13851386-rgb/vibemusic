@@ -1,0 +1,381 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>Artists | Vibe Music - Music Web App</title>
+<meta name="description" content="Browse all artists on Vibe Music">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+* { font-family: 'Poppins', sans-serif !important; }
+
+body, html {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #0a0a14;
+}
+
+.page-wrapper-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("{% static 'assets/img/wp15899524.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0;
+}
+
+.page-wrapper-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.7) 100%);
+    z-index: 1;
+}
+
+#main, #content, .page-content, .padding {
+    position: relative;
+    z-index: 2;
+}
+
+#header {
+    background: rgba(10, 10, 20, 0.7) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(247, 151, 30, 0.15);
+}
+
+.navbar-brand {
+    color: #fff !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.navbar-brand span {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.7) !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+    letter-spacing: 0.5px;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #f7971e !important;
+    background: rgba(247, 151, 30, 0.08) !important;
+    border-radius: 8px;
+}
+
+
+
+.section-title {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.section-title span:first-child {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-title .line {
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to left, #f7971e, transparent);
+}
+
+.artist-card {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    text-decoration: none;
+    display: block;
+}
+
+.artist-card:hover {
+    transform: translateY(-5px);
+    background: rgba(247, 151, 30, 0.08);
+    border-color: rgba(247, 151, 30, 0.3);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    text-decoration: none;
+}
+
+.artist-card .avatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(247, 151, 30, 0.2);
+    transition: border-color 0.3s;
+}
+
+.artist-card:hover .avatar img {
+    border-color: #f7971e;
+}
+
+.artist-card .artist-name {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+.artist-card .artist-meta {
+    color: rgba(255,255,255,0.4);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.artist-card .like-badge {
+    display: inline-block;
+    background: rgba(247, 151, 30, 0.1);
+    color: #f7971e;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 10px;
+    border: 1px solid rgba(247, 151, 30, 0.2);
+}
+
+.footer-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 30px 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.footer-logo img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(247, 151, 30, 0.2);
+}
+
+.footer-logo span {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: color 0.3s;
+    font-weight: 400;
+}
+
+.footer-links a:hover {
+    color: #f7971e !important;
+}
+
+.footer-copy {
+    text-align: center;
+    padding: 15px 0;
+    color: rgba(255,255,255,0.3);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 10px;
+}
+
+.empty-state {
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    padding: 50px 0;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .section-title { font-size: 1.1rem; }
+    .footer-horizontal { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+}
+</style>
+</head>
+<body class="layout-column">
+
+<div class="page-wrapper-bg"></div>
+
+<header id="header" class="page-header scroll-header fixed">
+    <div class="navbar navbar-expand-lg">
+        <a href="{% url 'home' %}" class="navbar-brand text-white">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
+        </a>
+        <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+            <ul class="navbar-nav" data-nav>
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link"><span class="nav-text">Home</span></a></li>
+                <li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
+                <li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><span class="nav-text">Charts</span></a></li>
+                <li class="nav-item"><a href="{% url 'genres' %}" class="nav-link"><span class="nav-text">Genres</span></a></li>
+                <li class="nav-item"><a href="{% url 'artists' %}" class="nav-link active"><span class="nav-text">Artists</span></a></li>
+                <li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
+            </ul>
+            <form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
+                <span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span>
+                <input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off" style="color:#fff;">
+            </form>
+        </div>
+        <ul class="nav navbar-menu order-1 order-lg-2">
+            <li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
+            {% if auth_user %}
+            <li class="nav-item d-flex align-items-center">
+                <a href="{% url 'profile' %}" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color" style="text-decoration:none;">
+                    <span class="avatar w-24">
+                        {% if auth_user.profile_image %}
+                        <img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+                        {% else %}
+                        <img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+                        {% endif %}
+                    </span>
+                    <span class="hidden-folded d-inline mx-2 text-white">{{ auth_user.username }}</span>
+                </a>
+                <a href="{% url 'logout' %}" class="nav-link" style="color:#f7971e;font-size:13px;white-space:nowrap;">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
+            <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
+            {% endif %}
+            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+        </ul>
+    </div>
+</header>
+
+<div id="main" class="layout-row flex">
+    <div id="content" class="flex">
+        <div class="page-content page-container" id="page-content">
+            <div class="padding">
+
+
+
+                {% if artists %}
+                <div class="section-title">
+                    <span>🏆 Artists ({{ artists_count }})</span>
+                    <span class="line"></span>
+                </div>
+                <div class="row">
+                    {% for artist in artists %}
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <a href="{% url 'artist_detail' artist_id=artist.id %}" class="artist-card">
+                            <div class="avatar">
+                                <img src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}">
+                            </div>
+                            <div class="artist-name">{{ artist.name }}</div>
+                            <div class="artist-meta">{{ artist.track_count }} Tracks</div>
+                            <div class="like-badge">❤ {{ artist.like_count }} Likes</div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="empty-state">
+                    <p>😔 No artists found</p>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer id="footer" class="page-footer">
+    <div class="page-container">
+        <div class="footer-horizontal">
+            <div class="footer-logo">
+                <a href="{% url 'home' %}" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+                    <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music">
+                    <span>Vibe Music</span>
+                </a>
+            </div>
+            <div class="footer-links">
+                <a href="{% url 'artists' %}">Artists</a>
+                <a href="{% url 'charts' %}">Charts</a>
+                <a href="{% url 'genres' %}">Genres</a>
+                <a href="{% url 'about' %}">About</a>
+                <a href="{% url 'blog:blog_list' %}">Blog</a>
+            </div>
+            <div class="footer-social" style="display:flex;gap:15px;align-items:center;">
+                <a href="https://instagram.com/sepi__en" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+                <a href="https://t.me/sepi_en" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#26A5E4'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3L9 13M21 3l-7 18-3-8-8-3z"/></svg></a>
+                <a href="https://wa.me/989928784959" target="_blank" style="color:rgba(255,255,255,0.5);transition:color 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.5)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+            </div>
+        </div>
+        <div class="footer-copy">&copy; 2025 Vibe Music. All Rights Reserved.</div>
+    </div>
+</footer>
+
+<script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'libs/popper.js/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'libs/pjax/pjax.min.js' %}"></script>
+<script src="{% static 'assets/js/ajax.js' %}"></script>
+<script src="{% static 'assets/js/lazyload.config.js' %}"></script>
+<script src="{% static 'assets/js/lazyload.js' %}"></script>
+<script src="{% static 'assets/js/plugin.js' %}"></script>
+<script src="{% static 'libs/scrollreveal/dist/scrollreveal.min.js' %}"></script>
+<script src="{% static 'libs/slick-carousel/slick/slick.min.js' %}"></script>
+<script src="{% static 'libs/feather-icons/dist/feather.min.js' %}"></script>
+<script src="{% static 'assets/js/theme.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

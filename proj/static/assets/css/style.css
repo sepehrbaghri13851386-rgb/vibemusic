@@ -1,0 +1,133 @@
+/*
+Custom css
+*/
+.page-header {
+  color:#fff;
+  padding:1rem;
+  background-color:rgba(0, 0, 0, 0.65);
+  background:linear-gradient(0, transparent 5%, rgba(0, 0, 0, 0.65));
+  transition:background 0.5s; }
+
+.page-header.scrolled {
+  background:rgba(0, 0, 0, 0.85); }
+
+#content {
+  min-height:100vh; }
+
+.page-hero {
+  padding: 8rem 0 4rem 0; }
+
+.page-hero .bg-media {
+  position:absolute;
+  z-index:0;
+  top:0;
+  right:0;
+  width:100vw;
+  max-width:100%; }
+
+.page-hero .bg-media:after {
+  padding-top: 50%; }
+
+.bg-dark .page-hero .bg-media:before {
+  background: linear-gradient(0deg, #1a1b22 10%, transparent); }
+
+.page-hero .bg-media:before {
+  position: absolute;
+  z-index:1;
+  width:100%;
+  height:100%;
+  content:"";
+  background:linear-gradient(0deg, #fff 10%, transparent 65%); }
+
+.page-hero .slick-dots {
+  position:absolute;
+  left:0;
+  top:50%; }
+
+.page-hero .slick-dots li {
+  display:block; }
+
+@media (max-width:600px) {
+  .page-hero .bg-media:after {
+    padding-top: 100%; } }
+
+.heading {
+  width: 100%;
+}
+.heading > div {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-direction: row;
+}
+
+/* Fix emoji display */
+img.emoji {
+  height: 1.2em;
+  width: 1.2em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.15em;
+  display: inline;
+}
+
+/* Profile dropdown styling */
+.dropdown-menu .dropdown-item {
+  padding: 10px 20px;
+  font-size: 14px;
+  transition: all 0.2s;
+  border-radius: 4px;
+  margin: 2px 8px;
+  width: auto;
+}
+.dropdown-menu .dropdown-item:hover {
+  background: rgba(233, 69, 96, 0.1);
+  color: #e94560;
+}
+.dropdown-menu .dropdown-divider {
+  border-color: rgba(255,255,255,0.08);
+  margin: 4px 0;
+}
+.dropdown-menu {
+  min-width: 200px;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+body,h1,h2,h3,h4,h5,a,p{font-family: iranyekan!important;}
+.fa-chevron-right,.fa-chevron-left,.fa-arrow-left,.button-next,.button-prev{ transform: scale(-1);}
+@font-face {
+	font-weight:200;
+  font-family: 'iranyekan';
+  src: url('fonts/IRANSansIRANSans--normal.eot'); /* IE9 Compat Modes */
+  src: url('fonts/IRANSansIRANSans--normal.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/IRANSansIRANSans--normal.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/IRANSansIRANSans--normal.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/IRANSansIRANSans--normal.svg#iranyekan') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'iranyekan';
+  font-weight:300;
+  src: url('fonts/IRANSansIRANSans--normal (3).eot'); /* IE9 Compat Modes */
+  src: url('fonts/IRANSansIRANSans--normal (3).eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/IRANSansIRANSans--normal (3).woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/IRANSansIRANSans--normal (3).ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/IRANSansIRANSans--normal (3).svg#iranyekan') format('svg'); /* Legacy iOS */
+}
+@font-face {
+  font-family: 'iranyekan';
+  src: url('fonts/iranyekanwebboldfanum.eot'); /* IE9 Compat Modes */
+  src: url('fonts/iranyekanwebboldfanum.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/iranyekanwebboldfanum.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/iranyekanwebboldfanum.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/iranyekanwebboldfanum.svg#iranyekan') format('svg'); /* Legacy iOS */
+   font-weight:700;
+}
+@font-face {
+  font-family: 'iranyekan';
+  src: url('fonts/IRANSansIRANSans-Bolder-normal.eot'); /* IE9 Compat Modes */
+  src: url('fonts/IRANSansIRANSans-Bolder-normal.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('fonts/IRANSansIRANSans-Bolder-normal.woff') format('woff'), /* Pretty Modern Browsers */
+       url('fonts/IRANSansIRANSans-Bolder-normal.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('fonts/IRANSansIRANSans-Bolder-normal.svg#iranyekan') format('svg'); /* Legacy iOS */
+   font-weight:bold;
+}

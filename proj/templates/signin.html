@@ -1,0 +1,127 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>Sign In | Vibe Music - Web Music App</title>
+<meta name="description" content="Responsive, Bootstrap, BS4">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+<style>
+#signin-mosaic .media {
+position: relative;
+padding-top: 100%;
+overflow: hidden;
+}
+#signin-mosaic .media-content {
+position: absolute;
+top: 0;
+right: 0;
+width: 100%;
+height: 100%;
+background-size: cover;
+background-position: center;
+transition: transform 0.3s ease;
+}
+#signin-mosaic .media-content:hover {
+transform: scale(1.1);
+}
+#signin-left {
+background: #1a1a2e;
+}
+#signin-mosaic {
+position: absolute;
+top: 0; right: 0; bottom: 0; left: 0;
+overflow: hidden;
+}
+</style>
+</head>
+<body class="layout-row bg-dark">
+<div class="d-flex flex-column flex"><div class="row no-gutters h-100">
+<div class="col-md-6 position-relative overflow-hidden" id="signin-left" style="background:#1a1a2e;">
+<div id="signin-mosaic"></div>
+<div class="p-3 p-md-5 d-flex flex-column h-100 position-relative" style="z-index: 10;">
+<h4 class="mb-3 text-white">Vibe Music</h4>
+<div class="text-fade">Web Music App</div>
+<div class="d-flex flex align-items-center justify-content-center"></div>
+<div class="d-flex text-sm text-fade">
+<a href="{% url 'home' %}" class="text-white">About</a><span class="flex"></span>
+</div>
+</div>
+</div>
+<div class="col-md-6" id="content-body"><div class="p-3 p-md-5">
+<h5>Welcome Back</h5>
+<p><small class="text-muted">Sign in to your account</small></p>
+{% if messages %}
+<div class="mb-3">
+{% for message in messages %}
+<div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %}">{{ message }}</div>
+{% endfor %}
+</div>
+{% endif %}
+<div class=""><form name="form" method="post" action="{% url 'signin' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
+{% csrf_token %}
+<div class="form-group"><input type="email" name="email" value="{{ request.POST.email|default:'' }}" class="form-control" placeholder="Email" required autofocus></div>
+<div class="form-group"><div class="input-group"><input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required><span class="input-group-append"><button type="button" class="btn no-shadow no-bg px-2" onclick="var p=document.getElementById('id_password');p.type=p.type==='password'?'text':'password';this.querySelector('i').setAttribute('data-feather',p.type==='password'?'eye':'eye-off');feather.replace();"><i data-feather="eye"></i></button></span></div></div>
+<div class="mb-3 text-sm d-flex justify-content-between">
+<label class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"><span class="custom-control-label">Remember Me</span></label>
+<a href="{% url 'forgot_password' %}" class="text-primary">Forgot your password?</a>
+</div>
+<button type="submit" class="btn btn-primary mb-4">Sign In</button><div>Don't have an account?<a href="{% url 'signup' %}" class="text-primary _600">Sign Up</a>
+</div>
+</form></div>
+</div></div>
+</div></div>
+<script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script><script src="{% static 'libs/popper.js/dist/umd/popper.min.js' %}"></script><script src="{% static 'libs/bootstrap/dist/js/bootstrap.min.js' %}"></script><script src="{% static 'libs/pjax/pjax.min.js' %}"></script><script src="{% static 'assets/js/ajax.js' %}"></script><script src="{% static 'assets/js/lazyload.config.js' %}"></script><script src="{% static 'assets/js/lazyload.js' %}"></script><script src="{% static 'assets/js/plugin.js' %}"></script><script src="{% static 'libs/scrollreveal/dist/scrollreveal.min.js' %}"></script><script src="{% static 'libs/slick-carousel/slick/slick.min.js' %}"></script><script src="{% static 'libs/feather-icons/dist/feather.min.js' %}"></script><script src="{% static 'assets/js/theme.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+
+    // Build random mosaic from all new images (a0-a35, b0-b35, c0-c35)
+    var allImages = [];
+    var prefix = '{% static "assets/img/" %}';
+    ['a','b','c'].forEach(function(p) {
+        for (var i = 0; i <= 35; i++) {
+            allImages.push(prefix + p + i + '.jpg');
+        }
+    });
+    // Shuffle
+    for (var i = allImages.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = allImages[i]; allImages[i] = allImages[j]; allImages[j] = tmp;
+    }
+    var cols = [2,3,2,3,2];
+    var container = document.getElementById('signin-mosaic');
+    if (container) {
+        var idx = 0;
+        for (var r = 0; r < 5; r++) {
+            var row = document.createElement('div');
+            row.className = 'row no-gutters';
+            for (var c = 0; c < cols.length; c++) {
+                var col = document.createElement('div');
+                col.className = 'col-' + cols[c];
+                var media = document.createElement('div');
+                media.className = 'media';
+                var a = document.createElement('a');
+                a.className = 'media-content';
+                a.style.backgroundImage = 'url(' + allImages[idx % allImages.length] + ')';
+                media.appendChild(a);
+                col.appendChild(media);
+                row.appendChild(col);
+                idx++;
+            }
+            container.appendChild(row);
+        }
+    }
+});
+</script>
+</body>
+</html>

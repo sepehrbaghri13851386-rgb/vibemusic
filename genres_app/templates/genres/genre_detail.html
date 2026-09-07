@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ genre.name }} | Vibe Music{% endblock %}
+
+{% block content %}
+<div class="padding">
+    <div style="text-align:center;padding:30px 0;">
+        <h1 class="display-4 font-weight-bold text-white">🎵 {{ genre.name }}</h1>
+        <p class="text-muted">{{ genre.description|default:"آهنگ‌های این سبک را مرور کنید" }}</p>
+        <a href="{% url 'genre_list' %}" class="btn btn-outline-light m-2">← بازگشت به لیست ژانرها</a>
+    </div>
+
+    <div style="margin-top:30px;">
+        <h3 style="color:#e94560;">🎶 آهنگ‌های این ژانر</h3>
+        {% if tracks %}
+            {% for track in tracks %}
+            <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:15px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <div style="color:#fff;font-weight:500;">{{ track.name_track }}</div>
+                    <div style="color:#888;font-size:14px;">{{ track.name }}</div>
+                </div>
+                <button style="background:#e94560;border:none;color:white;padding:8px 15px;border-radius:6px;cursor:pointer;">▶ پخش</button>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align:center;padding:40px 0;color:#666;">
+                <h4>😔 هیچ آهنگی در این ژانر وجود ندارد</h4>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+</script>
+{% endblock %}

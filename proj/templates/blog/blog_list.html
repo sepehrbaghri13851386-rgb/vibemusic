@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>Blog | Vibe Music - Web Music App</title>
+<meta name="description" content="Responsive, Bootstrap, BS4">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+</head>
+<body class="layout-column bg-dark">
+<header id="header" class="page-header scroll-header fixed"><div class="navbar navbar-expand-lg">
+<a href="{% url 'home' %}" class="navbar-brand text-white "><img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;"><span class="hidden-folded d-inline l-s-n-1x ">Vibe Music</span></a><div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+<ul class="navbar-nav" data-nav>
+<li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
+<li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><span class="nav-text">Charts</span></a></li>
+<li class="nav-item"><a href="{% url 'genres' %}" class="nav-link"><span class="nav-text">Genres</span></a></li>
+<li class="nav-item"><a href="{% url 'artists' %}" class="nav-link"><span class="nav-text">Artists</span></a></li>
+<li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
+</ul>
+<form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
+<span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span><input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off">
+</form>
+</div>
+<ul class="nav navbar-menu order-1 order-lg-2">
+<li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
+{% if auth_user %}
+<li class="nav-item d-flex align-items-center">
+<a href="{% url 'profile' %}" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color" style="text-decoration:none;">
+<span class="avatar w-24">
+{% if auth_user.profile_image %}
+<img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+{% else %}
+<img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+{% endif %}
+</span>
+<span class="hidden-folded d-inline mx-2 text-white">{{ auth_user.username }}</span>
+</a>
+<a href="{% url 'logout' %}" class="nav-link" style="color:#f5065a;font-size:13px;white-space:nowrap;">Logout</a>
+</li>
+{% else %}
+<li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
+<li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm btn-primary no-ajax" href="{% url 'signup' %}">Sign Up</a></li>
+{% endif %}
+<li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+</ul>
+</div></header><div id="main" class="layout-row flex"><div id="content" class="flex "><div><div class="page-content page-container" id="page-content"><div class="padding sr" id="list" data-plugin="list">
+<div class="page-hero">
+<div class="media bg-media"></div>
+<div class="pos-rlt"><h1 class="display-3 font-weight-bold text-white">Blog</h1></div>
+</div>
+<div class="d-lg-flex pos-rlt">
+<div class="flex">
+<div class="row list row-lg">
+{% for blog in blogs %}
+<div class="col-sm-6 mb-5" data-id="{{ blog.id }}" data-category="{{ blog.title|slugify }}">
+<div class="list-item r">
+<div class="media media-16x9">
+<a href="{% url 'blog:blog_detail' blog.pk %}" class="ajax media-content " style="background-image:url('{% if blog.image %}{{ blog.image.url }}{% else %}{% static 'assets/img/c0.jpg' %}{% endif %}')"></a><div class="media-action "></div>
+</div>
+<div class="list-content ">
+<div class="list-body "><a href="{% url 'blog:blog_detail' blog.pk %}" class="list-title title ajax text-highlight">{{ blog.title }}</a></div>
+<div class="list-footer "><div class="text-muted text-sm">{{ blog.created_at|date:"F j, g:i A" }}</div></div>
+</div>
+</div></div>
+{% empty %}
+<div class="col-12 text-center text-muted py-5">No blog posts have been published yet.</div>
+{% endfor %}
+</div>
+<div class="d-flex py-3 justify-content-center"><ul class="pagination pagination-sm"></ul></div>
+</div>
+<div style="min-width: 4rem"></div>
+<div class="w-xl w-auto-sm no-shrink"><div class="sticky">
+{% for item in featured_content %}
+<div class="list mb-5"><div class="list-item list-overlay r">
+<div class="media">
+{% if item.link_url %}
+<a href="{{ item.link_url }}" target="_blank" class="ajax media-content" style="background-image:url('{% if item.image %}{{ item.image.url }}{% else %}{% static 'assets/img/images (15).jpg' %}{% endif %}')"></a>
+{% elif item.link_text %}
+<a href="{{ item.link_text }}" class="ajax media-content" style="background-image:url('{% if item.image %}{{ item.image.url }}{% else %}{% static 'assets/img/images (15).jpg' %}{% endif %}')"></a>
+{% else %}
+<div class="media-content" style="background-image:url('{% if item.image %}{{ item.image.url }}{% else %}{% static 'assets/img/images (15).jpg' %}{% endif %}')"></div>
+{% endif %}
+<div class="media-action"></div>
+</div>
+<div class="list-content p-5 text-center"><div class="list-body">
+<h3 class="list-title title ajax font-weight-bold" style="color:#fff;">{{ item.title }}</h3>
+{% if item.description %}<p class="list-subtitle d-block text-muted" style="margin-top:8px;">{{ item.description }}</p>{% endif %}
+</div></div>
+</div></div>
+{% endfor %}
+
+{% if featured_tracks %}
+<h6 class="text text-muted sr-item">Top Songs</h6>
+<div class="row list-row">
+{% for ft in featured_tracks %}
+<div class="col-12 mb-2">
+<a href="{% url 'artist_detail' artist_id=ft.track.id %}" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border-radius:10px;padding:10px 14px;text-decoration:none;transition:background 0.3s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+<img src="{% if ft.track.image %}{{ ft.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ ft.track.name_track }}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">
+<div style="flex:1;min-width:0;">
+<div style="color:#fff;font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ft.track.name_track }}</div>
+<div style="color:#888;font-size:12px;">{{ ft.track.name }}</div>
+</div>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" style="flex-shrink:0;"><path d="M15 18l-6-6 6-6"/></svg>
+</a>
+</div>
+{% endfor %}
+</div>
+{% endif %}
+
+</div></div>
+</div>
+</div></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

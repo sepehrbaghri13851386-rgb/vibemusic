@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ژانرها | Vibe Music{% endblock %}
+
+{% block content %}
+<div class="padding">
+    <div style="text-align:center;padding:40px 0;">
+        <h1 class="display-3 font-weight-bold text-white">🎵 ژانرهای موسیقی</h1>
+        <p class="text-muted">آهنگ‌ها را بر اساس سبک مورد علاقه‌تان کشف کنید</p>
+    </div>
+
+    <div class="row">
+        {% if genres %}
+            {% for genre in genres %}
+            <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-4">
+                <a href="{% url 'genre_detail' genre.slug %}" class="text-decoration-none">
+                    <div style="background:rgba(255,255,255,0.05);border-radius:12px;padding:25px 15px;text-align:center;transition:all 0.3s ease;border:1px solid rgba(255,255,255,0.06);">
+                        <div style="font-size:50px;display:block;margin-bottom:10px;">🎵</div>
+                        <div style="color:#fff;font-size:16px;font-weight:600;">{{ genre.name }}</div>
+                        <div style="color:#888;font-size:13px;margin-top:5px;">{{ genre.tracks.count }} آهنگ</div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12 text-center" style="padding:50px 0;color:#666;">
+                <h4>😔 هیچ ژانری در سیستم ثبت نشده است</h4>
+                <p>لطفاً از طریق بخش ادمین، ژانرها را اضافه کنید</p>
+                <a href="/admin/" style="color:#e94560;">رفتن به ادمین</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+</script>
+{% endblock %}

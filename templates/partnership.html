@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Partnership | Vibe Music - Music Web App{% endblock %}
+
+{% block extra_css %}
+<style>
+    .partnership-page {
+        padding: 40px 0;
+    }
+    .hero-section {
+        position: relative;
+        padding: 80px 0;
+        margin-bottom: 50px;
+        border-radius: 20px;
+        overflow: hidden;
+        text-align: center;
+    }
+    .hero-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        z-index: 0;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 15px;
+        text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .hero-subtitle {
+        color: rgba(255,255,255,0.7);
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .section-title {
+        color: #fff;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .section-title .line {
+        flex: 1;
+        height: 2px;
+        background: linear-gradient(to left, #f7971e, transparent);
+        margin-right: 15px;
+    }
+    .feature-card {
+        background: rgba(255,255,255,0.04);
+        border-radius: 20px;
+        padding: 35px;
+        border: 1px solid rgba(255,255,255,0.06);
+        transition: all 0.4s ease;
+        height: 100%;
+    }
+    .feature-card:hover {
+        transform: translateY(-8px);
+        background:rgba(247,151,30, 0.08);
+        border-color:rgba(247,151,30, 0.3);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .feature-icon {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 30pxrgba(247,151,30, 0.3);
+    }
+    .feature-title {
+        color: #fff;
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+    .feature-desc {
+        color: #888;
+        font-size: 15px;
+        line-height: 1.8;
+    }
+    .contact-section {
+        background: rgba(255,255,255,0.03);
+        border-radius: 20px;
+        padding: 50px;
+        border: 1px solid rgba(255,255,255,0.06);
+        text-align: center;
+    }
+    .contact-title {
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+    .contact-subtitle {
+        color: #888;
+        font-size: 16px;
+        margin-bottom: 30px;
+    }
+    .instagram-card {
+        display: inline-block;
+        background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+        padding: 20px 40px;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+    }
+    .instagram-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(131, 58, 180, 0.4);
+    }
+    .instagram-icon {
+        font-size: 40px;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .instagram-handle {
+        color: #fff;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+    .stat-item {
+        text-align: center;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #f7971e;
+        display: block;
+    }
+    .stat-label {
+        color: #888;
+        font-size: 14px;
+    }
+    .cta-button {
+        display: inline-block;
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+        color: #fff;
+        padding: 15px 40px;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        margin-top: 25px;
+    }
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40pxrgba(247,151,30, 0.4);
+        color: #fff;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="partnership-page">
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            
+            <!-- هدر صفحه -->
+            <div class="hero-section">
+                <div class="hero-bg"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">🤝 Partnership & Sponsorship</h1>
+                    <p class="hero-subtitle">
+                        Collaborate with Vibe Music and introduce your brand to millions of music listeners
+                    </p>
+                </div>
+            </div>
+
+            <!-- آمار -->
+            <div class="stats-row mb-5">
+                <div class="stat-item">
+                    <span class="stat-number">۱۰K+</span>
+                    <span class="stat-label">Active Users</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۵۰K+</span>
+                    <span class="stat-label">Daily Plays</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۱۰۰+</span>
+                    <span class="stat-label">هنرمند</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">۲۴/۷</span>
+                    <span class="stat-label">Support</span>
+                </div>
+            </div>
+
+            <!-- فرصت‌های همکاری -->
+            <div class="section-title">
+                <span>🎯 Partnership Opportunities</span>
+                <span class="line"></span>
+            </div>
+            
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📢</div>
+                        <h3 class="feature-title">Banner Advertising</h3>
+                        <p class="feature-desc">
+                            بنرهای تبلیغاتی شما در صفحات پربازدید سایت نمایش داده می‌شوند و هزاران کاربر آن‌ها را می‌بینند.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎵</div>
+                        <h3 class="feature-title">Track Sponsorship</h3>
+                        <p class="feature-desc">
+                            آهنگ‌های اسپانسر شده در صفحه اول و نمودارها با برچسب ویژه نمایش داده می‌شوند.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎤</div>
+                        <h3 class="feature-title">Artist Support</h3>
+                        <p class="feature-desc">
+                            هنرمندان جدید را حمایت کنید و برند خود را با موسیقی پیوند دهید.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-5">
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Detailed Reporting</h3>
+                        <p class="feature-desc">
+                            گزارش‌های دقیق از نمایش‌ها، کلیک‌ها و تعامل کاربران دریافت کنید.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3 class="feature-title">Precise Targeting</h3>
+                        <p class="feature-desc">
+                            تبلیغات خود را بر اساس سن، علایق و موقعیت جغرافیایی کاربران هدف قرار دهید.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">💡</div>
+                        <h3 class="feature-title">Free Consultation</h3>
+                        <p class="feature-desc">
+                            تیم ما به شما کمک می‌کند بهترین استراتژی تبلیغاتی را انتخاب کنید.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- بخش تماس -->
+            <div class="contact-section">
+                <h2 class="contact-title">📧 Contact Us</h2>
+                <p class="contact-subtitle">
+                    برای کسب اطلاعات بیشتر در مورد فرصت‌های همکاری، از طریق اینستاگرام با ما تماس بگیرید
+                </p>
+                
+                <a href="https://instagram.com/sepi__en" target="_blank" class="instagram-card">
+                    <span class="instagram-icon">📸</span>
+                    <span class="instagram-handle">@sepi__en</span>
+                </a>
+                
+                <div style="margin-top: 30px; color: #666; font-size: 14px;">
+                    <p>⏰ پاسخگویی: ۲۴ ساعته</p>
+                    <p>💌 ایمیل: contact@vibemusic.ir</p>
+                </div>
+                
+                <a href="https://instagram.com/sepi__en" target="_blank" class="cta-button">
+                    همین الان پیام بدید 🚀
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

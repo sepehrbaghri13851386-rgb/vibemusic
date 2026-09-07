@@ -1,0 +1,437 @@
+{% load static %}
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="utf-8">
+<title>Genres | Vibe Music - Music Web App</title>
+<meta name="description" content="Responsive, Bootstrap, BS4">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'libs/slick-carousel/slick/slick-theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+    #header {
+        background: rgba(10, 10, 20, 0.7) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(247, 151, 30, 0.15);
+    }
+    .navbar-brand {
+        color: #fff !important;
+        font-weight: 700 !important;
+        letter-spacing: 1px;
+    }
+    .navbar-brand span {
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .nav-link {
+        color: rgba(255,255,255,0.7) !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        letter-spacing: 0.5px;
+    }
+    .nav-link:hover, .nav-link.active {
+        color: #f7971e !important;
+        background: rgba(247, 151, 30, 0.08) !important;
+        border-radius: 8px;
+    }
+    .page-hero h1 {
+        font-family: 'Poppins', sans-serif !important;
+        font-weight: 800 !important;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        background: linear-gradient(135deg, #f7971e, #ffd200);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .genre-card {
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.06);
+        cursor: pointer;
+        height: 100%;
+    }
+    .genre-card:hover {
+        transform: translateY(-5px);
+        background: rgba(233, 69, 96, 0.1);
+        border-color: #f7971e;
+        box-shadow: 0 10px 30px rgba(233, 69, 96, 0.15);
+    }
+    .genre-card.active {
+        background: rgba(233, 69, 96, 0.2);
+        border-color: #f7971e;
+    }
+    .genre-card .genre-icon {
+        font-size: 48px;
+        margin-bottom: 15px;
+        display: block;
+    }
+    .genre-card .genre-name {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .genre-card .genre-count {
+        color: #999;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+    .track-item {
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        padding: 12px 15px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    .track-item:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateX(-5px);
+    }
+    .track-item .track-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    .track-item .track-info {
+        flex: 1;
+    }
+    .track-item .track-name {
+        color: #fff;
+        font-weight: 500;
+    }
+    .track-item .track-artist {
+        color: #888;
+        font-size: 13px;
+    }
+    .track-item .track-genre {
+        background: rgba(233, 69, 96, 0.15);
+        color: #f7971e;
+        padding: 2px 12px;
+        border-radius: 12px;
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    .filter-section {
+        background: rgba(255,255,255,0.03);
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(255,255,255,0.06);
+    }
+    .filter-section .filter-title {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    .btn-genre-filter {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.08);
+        color: #ccc;
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        margin: 3px 4px;
+        display: inline-block;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .btn-genre-filter:hover {
+        background: rgba(233, 69, 96, 0.2);
+        color: #fff;
+        border-color: #f7971e;
+        transform: translateY(-2px);
+    }
+    .btn-genre-filter.active {
+        background: #f7971e;
+        color: #fff;
+        border-color: #f7971e;
+    }
+    .btn-genre-filter .count {
+        background: rgba(255,255,255,0.15);
+        padding: 0 8px;
+        border-radius: 10px;
+        font-size: 11px;
+        margin-right: 5px;
+    }
+    .no-result {
+        color: #666;
+        text-align: center;
+        padding: 50px 0;
+        font-size: 18px;
+    }
+</style>
+</head>
+<body class="layout-column bg-dark">
+
+<header id="header" class="page-header scroll-header fixed">
+    <div class="navbar navbar-expand-lg">
+        <a href="{% url 'home' %}" class="navbar-brand text-white"><img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
+        </a>
+        <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+            <ul class="navbar-nav" data-nav>
+                <li class="nav-item"><a href="{% url 'home' %}" class="nav-link"><span class="nav-text">Home</span></a></li>
+                <li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
+                <li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><span class="nav-text">Charts</span></a></li>
+                <li class="nav-item"><a href="{% url 'genres' %}" class="nav-link active"><span class="nav-text">Genres</span></a></li>
+                <li class="nav-item"><a href="{% url 'artists' %}" class="nav-link"><span class="nav-text">Artists</span></a></li>
+                <li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
+            </ul>
+            <form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
+                <span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span>
+                <input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off">
+            </form>
+        </div>
+        <ul class="nav navbar-menu order-1 order-lg-2">
+            <li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
+                        {% if auth_user %}
+<li class="nav-item d-flex align-items-center">
+<a href="{% url 'profile' %}" class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color" style="text-decoration:none;">
+<span class="avatar w-24">
+{% if auth_user.profile_image %}
+<img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+{% else %}
+<img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+{% endif %}
+</span>
+<span class="hidden-folded d-inline mx-2 text-white">{{ auth_user.username }}</span>
+</a>
+<a href="{% url 'logout' %}" class="nav-link" style="color:#f7971e;font-size:13px;white-space:nowrap;">Logout</a>
+</li>
+{% else %}
+<li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
+<li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
+{% endif %}
+            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+        </ul>
+    </div>
+</header>
+
+<div id="main" class="layout-row flex">
+    <div id="content" class="flex">
+        <div>
+            <div class="page-content page-container" id="page-content">
+                <div class="padding">
+
+                    <!-- Page Hero -->
+                    <div class="page-hero" style="position:relative;padding:90px 0 60px;min-height:280px;margin-bottom:30px;border-radius:16px;overflow:hidden;">
+                        <div class="media bg-media" style="position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;">
+                            <div class="media-content" style="width:100%;height:100%;background-image:url('{% static "assets/img/images (17).jpg" %}');background-size:cover;background-position:center 25%;filter:blur(0px);"></div>
+                            <div style="position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%);"></div>
+                        </div>
+                        <div class="pos-rlt" style="position:relative;z-index:1;text-align:center;">
+                            <h1 class="display-3 font-weight-bold text-white">🎵 Genres</h1>
+                            <p class="subtitle" style="color:rgba(255,255,255,0.7);font-size:1.1rem;">Discover tracks by your favorite genres</p>
+                        </div>
+                    </div>
+
+                    <!-- Genre Filter Section -->
+                    <div class="filter-section">
+                        <div class="filter-title">🎯 Filter by Genre</div>
+                        <div class="d-flex flex-wrap">
+                            <a href="{% url 'genres' %}" class="btn-genre-filter {% if not selected_genre %}active{% endif %}">
+                                All
+                                <span class="count">{{ all_tracks_count }}</span>
+                            </a>
+                            {% for genre in genres %}
+                            <a href="{% url 'genres' %}?genre={{ genre.slug }}" class="btn-genre-filter {% if selected_genre and selected_genre.slug == genre.slug %}active{% endif %}">
+                                {{ genre.name }}
+                                <span class="count">{{ genre.track_count }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Selected Genre Display -->
+                    {% if selected_genre %}
+                    <div class="mb-4" style="color:#fff;">
+                        <h4 style="color:#f7971e;">🎵 {{ selected_genre.name }}</h4>
+                        <p style="color:#999;">{{ selected_genre.description|default:"Browse tracks in this genre" }}</p>
+                        <hr style="border-color:rgba(255,255,255,0.06);">
+                    </div>
+                    {% endif %}
+
+                    <!-- Track List -->
+                    {% if tracks %}
+                    <div class="row">
+                        {% for track in tracks %}
+                        <div class="col-12 col-md-6">
+                            <div class="track-item" data-id="{{ track.id }}" {% if track.audio %}data-source="{{ track.audio.url }}"{% endif %}>
+                                <img src="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %}" alt="{{ track.name_track }}" class="track-img">
+                                <div class="track-info">
+                                    <div class="track-name">{{ track.name_track }}</div>
+                                    <div class="track-artist">
+                                        {{ track.name }}
+                                        {% if track.genre %}
+                                        <span class="track-genre">{{ track.genre.name }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <button class="btn btn-raised btn-icon btn-rounded bg--white btn-play" style="position:relative;">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#333" stroke="none" style="margin-right:2px;"><polygon points="5,3 19,12 5,21"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="no-result">
+                        😔 No tracks found in this genre
+                    </div>
+                    {% endif %}
+
+                    <!-- Hot Picks -->
+                    {% if hot_tracks %}
+                    <div class="mt-5" style="background:rgba(255,255,255,0.03);border-radius:16px;padding:25px;border:1px solid rgba(255,255,255,0.06);">
+                        <h4 style="color:#f7971e;">🔥 Hot Picks</h4>
+                        <div class="row">
+                            {% for track in hot_tracks %}
+                            <div class="col-12 col-md-6">
+                                <div class="track-item" data-id="{{ track.id }}" {% if track.audio %}data-source="{{ track.audio.url }}"{% endif %}>
+                                    <img src="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %}" alt="{{ track.name_track }}" class="track-img">
+                                    <div class="track-info">
+                                        <div class="track-name">{{ track.name_track }}</div>
+                                        <div class="track-artist">{{ track.name }} <span style="color:#f7971e;font-size:12px;">❤ {{ track.like_count }}</span></div>
+                                    </div>
+                                    <button class="btn btn-play" style="width:40px;height:40px;background:#f7971e;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(247,151,30,0.4);border:none;cursor:pointer;">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff" stroke="none" style="margin-right:1px;"><polygon points="6,3 20,12 6,21"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer id="footer" class="page-footer">
+<style>
+.footer-horizontal{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:30px 0;border-top:1px solid rgba(255,255,255,0.08);}
+.footer-logo{display:flex;align-items:center;gap:12px;}
+.footer-logo img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,0.1);}
+.footer-logo span{font-size:1.4rem;font-weight:700;color:#fff;}
+.footer-links{display:flex;gap:28px;flex-wrap:wrap;}
+.footer-links a{color:rgba(255,255,255,0.7);font-size:1.05rem;text-decoration:none;transition:color 0.3s;}
+.footer-links a:hover{color:#f7971e;}
+.footer-copy{text-align:center;padding:15px 0;color:rgba(255,255,255,0.4);font-size:0.9rem;border-top:1px solid rgba(255,255,255,0.05);margin-top:10px;}
+</style>
+<div class="page-container">
+<div class="footer-horizontal">
+<div class="footer-logo">
+<a href="{% url 'home' %}" style="text-decoration:none;display:flex;align-items:center;gap:12px;">
+<img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music">
+<span>Vibe Music</span>
+</a>
+</div>
+<div class="footer-links">
+<a href="{% url 'artists' %}">Artists</a>
+<a href="{% url 'charts' %}">Charts</a>
+<a href="{% url 'genres' %}">Genres</a>
+<a href="{% url 'about' %}">About</a>
+<a href="{% url 'blog:blog_list' %}">Blog</a>
+</div>
+<div class="footer-social" style="display:flex;gap:15px;align-items:center;">
+<a href="https://instagram.com/sepi__en" target="_blank" style="color:rgba(255,255,255,0.7);transition:color 0.3s;" onmouseover="this.style.color='#E4405F'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg></a>
+<a href="https://t.me/sepi_en" target="_blank" style="color:rgba(255,255,255,0.7);transition:color 0.3s;" onmouseover="this.style.color='#26A5E4'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 3L9 13M21 3l-7 18-3-8-8-3z"/></svg></a>
+<a href="https://wa.me/989928784959" target="_blank" style="color:rgba(255,255,255,0.7);transition:color 0.3s;" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,0.7)'"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+</div>
+</div>
+<div class="footer-copy">© 2025 Vibe Music. All Rights Reserved.</div>
+</div>
+</footer>
+
+<script src="{% static 'libs/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'libs/popper.js/dist/umd/popper.min.js' %}"></script>
+<script src="{% static 'libs/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'libs/pjax/pjax.min.js' %}"></script>
+<script src="{% static 'assets/js/ajax.js' %}"></script>
+<script src="{% static 'assets/js/lazyload.config.js' %}"></script>
+<script src="{% static 'assets/js/lazyload.js' %}"></script>
+<script src="{% static 'assets/js/plugin.js' %}"></script>
+<script src="{% static 'libs/scrollreveal/dist/scrollreveal.min.js' %}"></script>
+<script src="{% static 'libs/slick-carousel/slick/slick.min.js' %}"></script>
+<script src="{% static 'libs/feather-icons/dist/feather.min.js' %}"></script>
+<script src="{% static 'assets/js/theme.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    twemoji.parse(document.body, { folder: 'svg', ext: '.svg', base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/' });
+    var style = document.createElement('style');
+    style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
+    document.head.appendChild(style);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var currentAudio = null;
+    var currentBtn = null;
+
+    document.querySelectorAll('.btn-play').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            var trackItem = this.closest('.track-item');
+            var source = trackItem.getAttribute('data-source');
+
+            // If same song is playing, pause it
+            if (currentAudio && currentBtn === this) {
+                currentAudio.pause();
+                currentBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#333" stroke="none" style="margin-right:2px;"><polygon points="5,3 19,12 5,21"/></svg>';
+                currentAudio = null;
+                currentBtn = null;
+                return;
+            }
+
+            // Stop previous audio
+            if (currentAudio) {
+                currentAudio.pause();
+                currentBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#333" stroke="none" style="margin-right:2px;"><polygon points="5,3 19,12 5,21"/></svg>';
+            }
+
+            if (!source) {
+                alert('Audio file not uploaded!');
+                return;
+            }
+
+            // Play new audio
+            var audio = new Audio(source);
+            audio.play();
+            this.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#333" stroke="none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>';
+            currentAudio = audio;
+            currentBtn = this;
+
+            audio.addEventListener('ended', function() {
+                btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="#333" stroke="none" style="margin-right:2px;"><polygon points="5,3 19,12 5,21"/></svg>';
+                currentAudio = null;
+                currentBtn = null;
+            });
+        });
+    });
+});
+</script>
+
+</body>
+</html>

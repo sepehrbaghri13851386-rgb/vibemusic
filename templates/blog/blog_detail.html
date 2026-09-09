@@ -11,6 +11,9 @@
 <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'assets/css/theme.css' %}" type="text/css">
 <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" type="text/css">
+<style>
+@media(max-width:991.98px){.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important;animation:mobileMenuIn .3s ease}@keyframes mobileMenuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
+</style>
 </head>
 <body class="layout-column bg-dark">
 <header id="header" class="page-header scroll-header fixed"><div class="navbar navbar-expand-lg">
@@ -88,6 +91,9 @@ document.addEventListener('DOMContentLoaded', function() {
     style.textContent = 'img.emoji { height: 1.1em; width: 1.1em; margin: 0 .05em 0 .1em; vertical-align: -0.15em; display: inline; }';
     document.head.appendChild(style);
 });
+</script>
+<script>
+(function(){document.addEventListener('DOMContentLoaded',function(){var t=document.querySelector('[data-target="#navbarCollapse"]'),c=document.getElementById('navbarCollapse');if(t&&c){t.addEventListener('click',function(e){e.preventDefault();c.classList.toggle('show');this.classList.toggle('active')});document.addEventListener('click',function(e){if(!c.contains(e.target)&&!t.contains(e.target)){c.classList.remove('show');t.classList.remove('active')}});c.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){c.classList.remove('show');t.classList.remove('active')})})}})();
 </script>
 </body>
 </html>

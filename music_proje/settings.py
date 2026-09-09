@@ -135,17 +135,16 @@ WSGI_APPLICATION = 'music_proje.wsgi.application'
 # =========================================================
 import dj_database_url
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-
-if DATABASE_URL:
+if os.environ.get('RENDER'):
+    # On Render: use PostgreSQL
     DATABASES = {
         'default': dj_database_url.config(
-            default=DATABASE_URL,
             conn_max_age=600,
             ssl_require=True
         )
     }
 else:
+    # Local development: use SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',

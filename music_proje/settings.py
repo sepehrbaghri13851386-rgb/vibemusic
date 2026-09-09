@@ -67,6 +67,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware'و
 
     'django.contrib.sessions.middleware.SessionMiddleware',
 
@@ -135,7 +136,17 @@ WSGI_APPLICATION = 'music_proje.wsgi.application'
 # =========================================================
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'your_db_name',
+        'USER': 'your_user',
+        'PASSWORD': 'your_password',
+        'HOST': 'dpg-xxxxx-a.oregon-postgres.render.com',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require',
+        },
+    }
 }
 
 # =========================================================
@@ -175,15 +186,15 @@ USE_TZ = True
 # STATIC FILES
 # =========================================================
 
-STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # =========================================================
 # MEDIA FILES
 # =========================================================

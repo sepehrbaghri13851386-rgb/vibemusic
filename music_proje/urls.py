@@ -122,6 +122,12 @@ if settings.DEBUG:
         settings.MEDIA_URL,
         document_root=settings.MEDIA_ROOT
     )
+else:
+    # On production (Render), also serve media files
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
 
 
 handler404 = 'music_proje.views.custom_404'

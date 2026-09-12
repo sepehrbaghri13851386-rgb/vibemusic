@@ -1,10 +1,12 @@
+import os
 from django.db import models
+from django.conf import settings
 from genres_app.models import Genre
 from loginsogin_app.models import CustomUser
 
 class honermendan(models.Model):
     name = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images', blank=True, null=True)
     name_track = models.TextField(max_length=400)
     audio = models.FileField(
         upload_to='tracks/',
@@ -22,6 +24,26 @@ class honermendan(models.Model):
         verbose_name='سبک موسیقی',
         help_text='سبک این آهنگ را انتخاب کن (مثلاً ترپ، پاپ، قدیمی...)'
     )
+
+    @property
+    def has_image(self):
+        """Check if image file actually exists on disk."""
+        if not self.image:
+            return False
+        try:
+            return os.path.isfile(self.image.path)
+        except (ValueError, OSError):
+            return False
+
+    @property
+    def has_audio(self):
+        """Check if audio file actually exists on disk."""
+        if not self.audio:
+            return False
+        try:
+            return os.path.isfile(self.audio.path)
+        except (ValueError, OSError):
+            return False
 
     def __str__(self):
         return f"{self.name} - {self.name_track}"

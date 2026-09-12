@@ -472,7 +472,7 @@ body, html {
                         <a href="{% url 'artist_detail' artist_id=artist.id %}" class="text-inherit text-decoration-none">
                             <div class="text-center p-3" style="background:rgba(255,255,255,0.04);border-radius:12px;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.06);transition:0.3s;">
                                 <div class="avatar w-64 mb-2">
-                                    <img src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}" class="rounded-circle" style="width:64px;height:64px;object-fit:cover;border:3px solid rgba(247,151,30,0.2);">
+                                    <img src="{% if artist.has_image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}" class="rounded-circle" style="width:64px;height:64px;object-fit:cover;border:3px solid rgba(247,151,30,0.2);">
                                 </div>
                                 <div class="text-white font-weight-bold">{{ artist.name }}</div>
                                 <div class="text-muted text-sm">❤ {{ artist.like_count }} Likes</div>
@@ -492,16 +492,16 @@ body, html {
                     {% for item in top_tracks %}
                     <div class="col-12 col-md-6">
                         <div class="track-item track-item-data" 
-                             data-source="{% if item.track.audio %}{{ item.track.audio.url }}{% endif %}"
+                             data-source="{% if item.track.has_audio %}{{ item.track.audio.url }}{% endif %}"
                              data-track-name="{{ item.track.name_track }}"
                              data-artist-name="{{ item.track.name }}"
-                             data-image="{% if item.track.image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}">
-                            <img src="{% if item.track.image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ item.track.name_track }}" class="track-img">
+                             data-image="{% if item.track.has_image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}">
+                            <img src="{% if item.track.has_image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ item.track.name_track }}" class="track-img">
                             <div class="track-info">
                                 <div class="track-name">{{ item.track.name_track }}</div>
                                 <div class="track-artist">{{ item.track.name }}</div>
                             </div>
-                            <button class="play-btn-small play-btn" {% if not item.track.audio %}disabled{% endif %}>
+                            <button class="play-btn-small play-btn" {% if not item.track.has_audio %}disabled{% endif %}>
                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                             </button>
                         </div>

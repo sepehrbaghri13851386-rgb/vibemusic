@@ -1,10 +1,22 @@
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
+from django.conf import settings
 from honermandan_app.models import honermendan, ArtistLike, HotSuggestion, Comment
 from genres_app.models import Genre
 from loginsogin_app.models import CustomUser
 from blog_app.models import Blog
 from django.db.models import Count, Q
+
+
+def _file_exists(field_file):
+    """Check if a FileField/ImageField file actually exists on disk."""
+    if not field_file:
+        return False
+    try:
+        return os.path.isfile(field_file.path)
+    except (ValueError, OSError):
+        return False
 
 
 def _tracks():
@@ -52,6 +64,7 @@ def artists(request):
             first.track_count = tracks.filter(name=name).count()
             first.like_count = like_counts.get(name, 0)
             first.liked_by_user = name in liked_names
+            first.has_image = _file_exists(first.image)
             artist_list.append(first)
 
     hot_tracks = HotSuggestion.objects.filter(active=True).select_related('track')
@@ -71,8 +84,13 @@ def artist_detail(request, artist_id):
     artist_tracks = _tracks().filter(name=artist_name)
     artist_info = artist_tracks.first()
 
-    if artist_info and not artist_info.image:
-        artist_info.image = 'assets/img/a0.jpg'
+    if artist_info:
+        artist_info.has_image = _file_exists(artist_info.image)
+
+    # Mark each track for actual file existence
+    for t in artist_tracks:
+        t.has_image = _file_exists(t.image)
+        t.has_audio = _file_exists(t.audio)
 
     like_count = ArtistLike.objects.filter(artist_name=artist_name).count()
     user_id = request.session.get('user_id')
@@ -124,6 +142,14 @@ def artist_detail_default(request):
         return render(request, 'artist_detail.html', {'artist': None, 'tracks': [], 'track_count': 0})
 
 
+def _mark_tracks(tracks):
+    """Mark tracks with file existence flags."""
+    for t in tracks:
+        t.has_image = _file_exists(t.image)
+        t.has_audio = _file_exists(t.audio)
+    return tracks
+
+
 def charts(request):
     tracks = _tracks()
 
@@ -138,6 +164,7 @@ def charts(request):
             top_artists.append(artist_track)
 
     top_tracks = HotSuggestion.objects.filter(active=True).select_related('track')
+    _mark_tracks(tracks)
 
     return render(request, 'charts.html', {'tracks': tracks, 'top_artists': top_artists, 'top_tracks': top_tracks})
 
@@ -147,7 +174,8 @@ def discover(request):
 
     top_tracks = HotSuggestion.objects.filter(active=True).select_related('track')
 
-    latest_tracks = tracks[:5]
+    latest_tracks = list(tracks[:5])
+    _mark_tracks(latest_tracks)
 
     latest_posts = Blog.objects.filter(is_published=True).order_by('-created_at')[:3]
 
@@ -245,6 +273,7 @@ def search(request):
                     'name': name,
                     'id': first_track.pk,
                     'image': first_track.image,
+                    'has_image': first_track.has_image,
                     'track_count': honermendan.objects.filter(name=name).count(),
                 })
     return render(request, 'search.html', {

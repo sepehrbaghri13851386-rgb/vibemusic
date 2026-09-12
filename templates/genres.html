@@ -274,8 +274,8 @@
                     <div class="row">
                         {% for track in tracks %}
                         <div class="col-12 col-md-6">
-                            <div class="track-item" data-id="{{ track.id }}" {% if track.audio %}data-source="{{ track.audio.url }}"{% endif %}>
-                                <img src="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %}" alt="{{ track.name_track }}" class="track-img">
+                            <div class="track-item" data-id="{{ track.id }}" {% if track.has_audio %}data-source="{{ track.audio.url }}"{% endif %}>
+                                <img src="{% if track.has_image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %}" alt="{{ track.name_track }}" class="track-img">
                                 <div class="track-info">
                                     <div class="track-name">{{ track.name_track }}</div>
                                     <div class="track-artist">
@@ -305,8 +305,8 @@
                         <div class="row">
                             {% for track in hot_tracks %}
                             <div class="col-12 col-md-6">
-                                <div class="track-item" data-id="{{ track.id }}" {% if track.audio %}data-source="{{ track.audio.url }}"{% endif %}>
-                                    <img src="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %}" alt="{{ track.name_track }}" class="track-img">
+                                <div class="track-item" data-id="{{ track.id }}" {% if track.has_audio %}data-source="{{ track.audio.url }}"{% endif %}>
+                                    <img src="{% if track.has_image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %}" alt="{{ track.name_track }}" class="track-img">
                                     <div class="track-info">
                                         <div class="track-name">{{ track.name_track }}</div>
                                         <div class="track-artist">{{ track.name }} <span style="color:#f7971e;font-size:12px;">❤ {{ track.like_count }}</span></div>

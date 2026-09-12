@@ -312,7 +312,7 @@ body, html {
                     <div class="col-6 col-md-4 col-lg-3 mb-4">
                         <a href="{% url 'artist_detail' artist_id=artist.id %}" class="artist-card">
                             <div class="avatar">
-                                <img src="{% if artist.image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}">
+                                <img src="{% if artist.has_image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}">
                             </div>
                             <div class="artist-name">{{ artist.name }}</div>
                             <div class="artist-meta">{{ artist.track_count }} Tracks</div>

@@ -270,7 +270,7 @@
                     <!-- هدر هنرمند -->
                     <div class="artist-header-card">
                         <div class="artist-avatar-wrapper">
-                            {% if artist.image %}
+                            {% if artist.has_image %}
                                 <img src="{{ artist.image.url }}" alt="{{ artist.name }}" class="artist-avatar">
                             {% else %}
                                 <img src="{% static 'assets/img/a0.jpg' %}" alt="{{ artist.name }}" class="artist-avatar">
@@ -304,14 +304,14 @@
                             {% for track in tracks %}
                             <div class="track-item-detail d-flex align-items-center track-item" 
                                  data-id="track-{{ track.id }}" 
-                                 data-source="{% if track.audio %}{{ track.audio.url }}{% endif %}" 
+                                 data-source="{% if track.has_audio %}{{ track.audio.url }}{% endif %}" 
                                  data-track-name="{{ track.name_track }}" 
                                  data-artist-name="{{ track.name }}" 
-                                 data-image="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}">
+                                 data-image="{% if track.has_image %}{{ track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}">
                                 
                                 <span class="track-number">{{ forloop.counter }}</span>
 
-                                <img src="{% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}"
+                                <img src="{% if track.has_image %}{{ track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}"
                                      alt="{{ track.name_track }}" class="track-cover">
 
                                 <div class="track-info">
@@ -320,7 +320,7 @@
                                 </div>
                                 
                                 <button class="play-btn-detail me-3 play-btn" 
-                                        {% if not track.audio %} disabled title="Audio file not uploaded"{% endif %}>
+                                        {% if not track.has_audio %} disabled title="Audio file not uploaded"{% endif %}>
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                                 </button>
                             </div>

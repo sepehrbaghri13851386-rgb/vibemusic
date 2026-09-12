@@ -78,7 +78,7 @@
 {% for ft in featured_tracks %}
 <div class="col-12 mb-2">
 <a href="{% url 'artist_detail' artist_id=ft.track.id %}" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border-radius:10px;padding:10px 14px;text-decoration:none;transition:background 0.3s;cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
-<img src="{% if ft.track.image %}{{ ft.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ ft.track.name_track }}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">
+<img src="{% if ft.track.has_image %}{{ ft.track.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ ft.track.name_track }}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">
 <div style="flex:1;min-width:0;">
 <div style="background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ ft.track.name_track }}</div>
 <div style="background:linear-gradient(135deg,#f7971e,#ffd200);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:12px;">{{ ft.track.name }}</div>

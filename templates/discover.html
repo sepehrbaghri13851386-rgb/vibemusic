@@ -484,7 +484,7 @@ body, html {
                     <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
                         <div class="list-item discover-card">
                             <div class="media">
-                                <a href="{% url 'artist_detail' artist_id=item.track.id %}" class="ajax media-content" style="background-image:url({% if item.track.image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %})"></a>
+                                <a href="{% url 'artist_detail' artist_id=item.track.id %}" class="ajax media-content" style="background-image:url({% if item.track.has_image %}{{ item.track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %})"></a>
                                 <div class="media-action-overlay">
                                     <a href="{% url 'artist_detail' artist_id=item.track.id %}" class="btn-play">
                                         <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
@@ -514,7 +514,7 @@ body, html {
                             <div class="col-12 mb-2">
                                 <div class="recent-track-item">
                                     <div class="media">
-                                        <a href="{% url 'artist_detail' artist_id=track.id %}" class="ajax media-content" style="background-image:url({% if track.image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %});"></a>
+                                        <a href="{% url 'artist_detail' artist_id=track.id %}" class="ajax media-content" style="background-image:url({% if track.has_image %}{{ track.image.url }}{% else %}{% static 'assets/img/default.jpg' %}{% endif %});"></a>
                                         <div class="media-action-overlay">
                                             <a href="{% url 'artist_detail' artist_id=track.id %}" class="btn-play">
                                                 <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>

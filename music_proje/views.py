@@ -64,7 +64,6 @@ def artists(request):
             first.track_count = tracks.filter(name=name).count()
             first.like_count = like_counts.get(name, 0)
             first.liked_by_user = name in liked_names
-            first.has_image = _file_exists(first.image)
             artist_list.append(first)
 
     hot_tracks = HotSuggestion.objects.filter(active=True).select_related('track')
@@ -83,14 +82,6 @@ def artist_detail(request, artist_id):
     artist_name = first_track.name
     artist_tracks = _tracks().filter(name=artist_name)
     artist_info = artist_tracks.first()
-
-    if artist_info:
-        artist_info.has_image = _file_exists(artist_info.image)
-
-    # Mark each track for actual file existence
-    for t in artist_tracks:
-        t.has_image = _file_exists(t.image)
-        t.has_audio = _file_exists(t.audio)
 
     like_count = ArtistLike.objects.filter(artist_name=artist_name).count()
     user_id = request.session.get('user_id')
@@ -142,14 +133,6 @@ def artist_detail_default(request):
         return render(request, 'artist_detail.html', {'artist': None, 'tracks': [], 'track_count': 0})
 
 
-def _mark_tracks(tracks):
-    """Mark tracks with file existence flags."""
-    for t in tracks:
-        t.has_image = _file_exists(t.image)
-        t.has_audio = _file_exists(t.audio)
-    return tracks
-
-
 def charts(request):
     tracks = _tracks()
 
@@ -164,7 +147,6 @@ def charts(request):
             top_artists.append(artist_track)
 
     top_tracks = HotSuggestion.objects.filter(active=True).select_related('track')
-    _mark_tracks(tracks)
 
     return render(request, 'charts.html', {'tracks': tracks, 'top_artists': top_artists, 'top_tracks': top_tracks})
 
@@ -175,7 +157,6 @@ def discover(request):
     top_tracks = HotSuggestion.objects.filter(active=True).select_related('track')
 
     latest_tracks = list(tracks[:5])
-    _mark_tracks(latest_tracks)
 
     latest_posts = Blog.objects.filter(is_published=True).order_by('-created_at')[:3]
 

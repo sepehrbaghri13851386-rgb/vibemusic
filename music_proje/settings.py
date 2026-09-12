@@ -153,7 +153,6 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # =========================================================
@@ -167,7 +166,18 @@ CLOUDINARY_STORAGE = {
     "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
     "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
 }
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+
+# Django 4.2+/6.0 style storage configuration (replaces the old
+# DEFAULT_FILE_STORAGE / STATICFILES_STORAGE settings, which no
+# longer have any effect on modern Django versions).
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 # =========================================================

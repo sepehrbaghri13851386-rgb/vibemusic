@@ -1,6 +1,7 @@
 import os
 from django.db import models
 from django.conf import settings
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from genres_app.models import Genre
 from loginsogin_app.models import CustomUser
 
@@ -12,6 +13,7 @@ class honermendan(models.Model):
         upload_to='tracks/',
         blank=True,
         null=True,
+        storage=RawMediaCloudinaryStorage(),
         verbose_name='فایل آهنگ',
         help_text='حتماً فایل mp3 را اینجا آپلود کن. فقط اسم و عکس برای پخش کافی نیست.'
     )

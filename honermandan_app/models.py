@@ -27,23 +27,13 @@ class honermendan(models.Model):
 
     @property
     def has_image(self):
-        """Check if image file actually exists on disk."""
-        if not self.image:
-            return False
-        try:
-            return os.path.isfile(self.image.path)
-        except (ValueError, OSError):
-            return False
+        """Check if an image file is attached (works with cloud storage too)."""
+        return bool(self.image)
 
     @property
     def has_audio(self):
-        """Check if audio file actually exists on disk."""
-        if not self.audio:
-            return False
-        try:
-            return os.path.isfile(self.audio.path)
-        except (ValueError, OSError):
-            return False
+        """Check if an audio file is attached (works with cloud storage too)."""
+        return bool(self.audio)
 
     def __str__(self):
         return f"{self.name} - {self.name_track}"

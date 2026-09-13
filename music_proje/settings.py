@@ -154,6 +154,11 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Some CSS files reference font files (like .eot) that don't actually
+# exist in the project. Without this, whitenoise fails the entire
+# build when it can't find a file referenced inside a CSS file.
+WHITENOISE_MANIFEST_STRICT = False
+
 
 # =========================================================
 # MEDIA FILES

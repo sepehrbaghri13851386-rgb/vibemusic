@@ -132,63 +132,86 @@ body, html {
     background: linear-gradient(to left, #f7971e, transparent);
 }
 
-.artist-card {
+.artist-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.artist-list-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     background: rgba(255,255,255,0.04);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 16px;
-    padding: 24px;
-    text-align: center;
-    transition: all 0.3s ease;
-    height: 100%;
+    padding: 12px 16px;
     text-decoration: none;
-    display: block;
+    transition: all 0.25s ease;
 }
 
-.artist-card:hover {
-    transform: translateY(-5px);
+.artist-list-item:hover {
     background: rgba(247, 151, 30, 0.08);
     border-color: rgba(247, 151, 30, 0.3);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     text-decoration: none;
 }
 
-.artist-card .avatar img {
-    width: 80px;
-    height: 80px;
+.artist-list-item .ali-avatar img {
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid rgba(247, 151, 30, 0.2);
-    transition: border-color 0.3s;
+    border: 2px solid rgba(247, 151, 30, 0.3);
+    flex-shrink: 0;
 }
 
-.artist-card:hover .avatar img {
-    border-color: #f7971e;
+.artist-list-item .ali-info {
+    flex: 1;
+    min-width: 0;
 }
 
-.artist-card .artist-name {
+.artist-list-item .ali-name {
     color: #fff;
     font-size: 1rem;
-    font-weight: 600;
-    margin-top: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.artist-card .artist-meta {
-    color: rgba(255,255,255,0.4);
+.artist-list-item .ali-meta {
+    color: rgba(255,255,255,0.45);
     font-size: 13px;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
-.artist-card .like-badge {
-    display: inline-block;
+.artist-list-item .ali-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.artist-list-item .ali-like {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     background: rgba(247, 151, 30, 0.1);
     color: #f7971e;
-    padding: 4px 12px;
+    padding: 6px 12px;
     border-radius: 20px;
     font-size: 12px;
-    margin-top: 10px;
+    font-weight: 600;
     border: 1px solid rgba(247, 151, 30, 0.2);
+    white-space: nowrap;
+}
+
+.artist-list-item .ali-chevron {
+    color: rgba(255,255,255,0.35);
+    font-size: 22px;
+    line-height: 1;
 }
 
 .footer-horizontal {
@@ -426,14 +449,14 @@ body, html {
     .footer-links { justify-content: center; gap: 15px; }
     .footer-social { justify-content: center; }
 
-    .artist-card { padding: 16px; }
-    .artist-card .avatar img { width: 64px; height: 64px; }
-    .artist-card .artist-name { font-size: 0.9rem; }
+    .artist-list-item { padding: 10px 12px; gap: 10px; }
+    .artist-list-item .ali-avatar img { width: 46px; height: 46px; }
+    .artist-list-item .ali-name { font-size: 0.9rem; }
+    .artist-list-item .ali-like { font-size: 11px; padding: 5px 10px; }
 }
 
 @media (max-width: 420px) {
-    .artist-card { padding: 14px 10px; }
-    .artist-card .avatar img { width: 56px; height: 56px; }
+    .artist-list-item .ali-avatar img { width: 42px; height: 42px; }
 }
 </style>
 </head>
@@ -502,7 +525,7 @@ body, html {
             {% endif %}
             <li class="nav-item d-lg-none mobile-toggle-item">
                 <a href="#" class="mobile-toggle-btn" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse">
-                    <i data-feather="more-vertical"></i>
+                    <i data-feather="menu"></i>
                 </a>
             </li>
         </ul>
@@ -524,18 +547,21 @@ body, html {
 
 
                 {% if artists %}
-                <div class="row">
+                <div class="artist-list">
                     {% for artist in artists %}
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
-                        <a href="{% url 'artist_detail' artist_id=artist.id %}" class="artist-card">
-                            <div class="avatar">
-                                <img src="{% if artist.has_image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}">
-                            </div>
-                            <div class="artist-name">{{ artist.name }}</div>
-                            <div class="artist-meta">{{ artist.track_count }} Tracks</div>
-                            <div class="like-badge">❤ {{ artist.like_count }} Likes</div>
-                        </a>
-                    </div>
+                    <a href="{% url 'artist_detail' artist_id=artist.id %}" class="artist-list-item">
+                        <div class="ali-avatar">
+                            <img src="{% if artist.has_image %}{{ artist.image.url }}{% else %}{% static 'assets/img/a0.jpg' %}{% endif %}" alt="{{ artist.name }}">
+                        </div>
+                        <div class="ali-info">
+                            <div class="ali-name">{{ artist.name }}</div>
+                            <div class="ali-meta">{{ artist.track_count }} Track{{ artist.track_count|pluralize }}</div>
+                        </div>
+                        <div class="ali-right">
+                            <span class="ali-like">❤ {{ artist.like_count }} Likes</span>
+                            <span class="ali-chevron">›</span>
+                        </div>
+                    </a>
                     {% endfor %}
                 </div>
                 {% else %}

@@ -5,20 +5,34 @@
 
 {% block content %}
 <style>
-/* صفحه تیره مثل Artists */
-body { background: #0a0a14 !important; }
+/* ===== FIX: center page + remove right/left gaps ===== */
+html, body { width: 100% !important; overflow-x: hidden !important; }
 
-/* اگر قالب اصلی شما با flex باعث فاصله اضافه می‌شود */
-#main.layout-row.flex,
-#content.flex,
-.page-content,
-.page-container {
-    flex: 0 0 auto !important;
-    min-height: 0 !important;
-    height: auto !important;
+#main.layout-row.flex { 
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
 }
 
-/* ===== HERO شبیه Artists ===== */
+#content.flex {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.page-container, .page-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ===== page background like Artists ===== */
+body { background: #0a0a14 !important; }
+
+/* ===== HERO (like Artists page) ===== */
 .home-hero {
     position: relative;
     width: 100%;
@@ -140,7 +154,7 @@ body { background: #0a0a14 !important; }
     background: linear-gradient(to left, #f7971e, transparent);
 }
 
-/* کارت‌ها مثل لیست Artists */
+/* cards like Artists list items */
 .home-card{
     display:flex;
     align-items:center;
@@ -195,6 +209,7 @@ body { background: #0a0a14 !important; }
 }
 </style>
 
+<!-- HERO -->
 <section class="home-hero">
     <div class="home-hero-content">
         <div class="home-badge">Premium Music</div>
@@ -204,6 +219,7 @@ body { background: #0a0a14 !important; }
     </div>
 </section>
 
+<!-- CONTENT -->
 <section class="home-wrap">
     <div class="section-title">
         <span>Explore</span><span class="line"></span>

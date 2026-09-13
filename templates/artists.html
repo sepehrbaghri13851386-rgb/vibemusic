@@ -27,12 +27,14 @@ body, html {
 .artists-hero {
     position: relative;
     width: 100%;
-    height: calc(260px + 70px);
+    height: 62vh;
+    min-height: 380px;
+    max-height: 620px;
     padding-top: 70px;
     box-sizing: border-box;
     background-image: url("{% static 'assets/img/wp15899524.jpg' %}");
     background-size: cover;
-    background-position: center 20%;
+    background-position: center 15%;
     overflow: hidden;
 }
 
@@ -40,7 +42,7 @@ body, html {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(10,10,20,0.55) 0%, rgba(10,10,20,0.45) 40%, #0a0a14 100%);
+    background: linear-gradient(180deg, rgba(10,10,20,0.15) 0%, rgba(10,10,20,0.25) 55%, #0a0a14 100%);
 }
 
 .artists-hero-content {
@@ -50,28 +52,31 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
     text-align: center;
-    padding: 0 20px;
+    padding: 0 20px 36px;
 }
 
 .artists-hero-content h1 {
     color: #fff;
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     font-weight: 800;
     margin: 0 0 6px;
 }
 
 .artists-hero-content p {
     color: rgba(255,255,255,0.65);
-    font-size: 0.95rem;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
     margin: 0;
 }
 
 @media (max-width: 767.98px) {
-    .artists-hero { height: calc(170px + 60px); padding-top: 60px; }
-    .artists-hero-content h1 { font-size: 1.3rem; }
-    .artists-hero-content p { font-size: 0.85rem; }
+    .artists-hero { height: 52vh; min-height: 300px; padding-top: 60px; }
+    .artists-hero-content { padding: 0 20px 28px; }
+    .artists-hero-content h1 { font-size: 1.8rem; }
+    .artists-hero-content p { font-size: 0.8rem; letter-spacing: 1.5px; }
 }
 
 #header {

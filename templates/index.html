@@ -5,98 +5,228 @@
 
 {% block content %}
 <style>
-body, html { margin: 0; padding: 0; overflow-x: hidden; background: transparent !important; font-family: 'Vazirmatn', sans-serif !important; }
+/* صفحه تیره مثل Artists */
+body { background: #0a0a14 !important; }
 
-.page-wrapper {
-    position: relative; width: 100%; min-height: 100vh;
+/* اگر قالب اصلی شما با flex باعث فاصله اضافه می‌شود */
+#main.layout-row.flex,
+#content.flex,
+.page-content,
+.page-container {
+    flex: 0 0 auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+/* ===== HERO شبیه Artists ===== */
+.home-hero {
+    position: relative;
+    width: 100%;
+    height: 62vh;
+    min-height: 380px;
+    max-height: 650px;
+    padding-top: 70px;
+    box-sizing: border-box;
+
     background-image: url("{% static 'assets/img/wp15899524.jpg' %}");
-    background-size: cover; background-position: center; background-repeat: no-repeat;
-    background-attachment: fixed;
-    display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-    padding: 40px 20px;
+    background-size: cover;
+    background-position: center 15%;
+    overflow: hidden;
 }
-.page-wrapper::before {
-    content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.7) 100%);
-    z-index: 0; pointer-events: none;
-}
-.page-wrapper > * { position: relative; z-index: 1; }
-
-.hero-section { text-align: center; padding: 60px 20px 40px; width: 100%; max-width: 900px; }
-
-.hero-badge {
-    display: inline-block; font-family: 'Vazirmatn', sans-serif; font-weight: 400;
-    font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase;
-    color: rgba(255,255,255,0.8); background: rgba(168, 85, 247, 0.2);
-    backdrop-filter: blur(10px); padding: 8px 25px; border-radius: 50px;
-    border: 1px solid rgba(168, 85, 247, 0.5); margin-bottom: 30px;
+.home-hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background: linear-gradient(
+        180deg,
+        rgba(10,10,20,0.15) 0%,
+        rgba(10,10,20,0.35) 55%,
+        #0a0a14 100%
+    );
 }
 
-.hero-title {
-    font-family: 'Vazirmatn', sans-serif; font-weight: 900; font-size: 5rem;
-    background: linear-gradient(135deg, #a855f7 0%, #d8b4fe 50%, #a855f7 100%);
-    background-size: 200% 200%;
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    animation: shimmer 3s ease-in-out infinite; margin-bottom: 10px;
-}
-@keyframes shimmer { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.home-hero-content{
+    position:relative;
+    z-index:2;
+    height:100%;
+    max-width:980px;
+    margin:0 auto;
+    padding:0 20px 34px;
 
-.hero-subtitle {
-    font-family: 'Vazirmatn', sans-serif; font-weight: 300; font-size: 1.4rem;
-    letter-spacing: 6px; color: rgba(255,255,255,0.8); text-transform: uppercase; margin-bottom: 40px;
-}
-
-.btn-hero {
-    font-family: 'Vazirmatn', sans-serif; font-weight: 600; padding: 16px 50px;
-    border-radius: 50px; background: #a855f7; color: #fff !important;
-    border: none; font-size: 1.05rem; letter-spacing: 1px; text-transform: uppercase;
-    transition: all 0.4s ease; box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4);
-    text-decoration: none; display: inline-block;
-}
-.btn-hero:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 20px 60px rgba(168, 85, 247, 0.6); color: #fff !important; }
-
-.artists-section {
-    width: 100%; max-width: 850px; text-align: center; padding: 50px 40px;
-    margin: 20px auto 40px; background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(15px); border-radius: 30px;
-    border: 1px solid rgba(168, 85, 247, 0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-}
-.artists-section h2 {
-    font-family: 'Vazirmatn', sans-serif; font-weight: 800; font-size: 3.2rem;
-    color: #fff !important; margin-bottom: 15px;
-}
-.artists-section p {
-    font-family: 'Vazirmatn', sans-serif; font-weight: 300; font-size: 1.1rem;
-    color: rgba(255,255,255,0.85); max-width: 650px; margin: 0 auto 30px; line-height: 2;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-end;
+    text-align:center;
 }
 
-.btn-artists {
-    font-family: 'Vazirmatn', sans-serif; font-weight: 600; padding: 14px 40px;
-    border-radius: 50px; background: transparent; color: #fff !important;
-    border: 2px solid rgba(168, 85, 247, 0.5); font-size: 0.95rem;
-    transition: all 0.4s ease; display: inline-block; text-decoration: none;
+.home-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:8px 18px;
+    border-radius:999px;
+    border:1px solid rgba(247,151,30,0.25);
+    background: rgba(247,151,30,0.08);
+    color: rgba(255,255,255,0.85);
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
-.btn-artists:hover { background: #a855f7; color: #fff !important; border-color: #a855f7; transform: translateY(-3px); }
 
-@media (max-width: 768px) {
-    .hero-title { font-size: 2.8rem; }
-    .hero-subtitle { font-size: 0.9rem; }
-    .btn-hero { padding: 14px 35px; }
+.home-title{
+    color:#fff;
+    font-size:2.7rem;
+    font-weight:900;
+    margin:0 0 8px;
+    letter-spacing:1px;
+}
+
+.home-subtitle{
+    color: rgba(255,255,255,0.65);
+    font-size:1rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    margin:0 0 18px;
+}
+
+.home-cta{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 22px;
+    border-radius:999px;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    color:#14141f !important;
+    font-weight:800;
+    text-decoration:none;
+    transition: transform .2s ease, box-shadow .2s ease;
+    box-shadow: 0 12px 35px rgba(247,151,30,0.25);
+}
+.home-cta:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 18px 45px rgba(247,151,30,0.35);
+    text-decoration:none;
+}
+
+/* ===== CONTENT ===== */
+.home-wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:26px 16px 30px;
+}
+
+.section-title{
+    color:#fff;
+    font-size:1.35rem;
+    font-weight:800;
+    margin:0 0 18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+.section-title span:first-child{
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+}
+.section-title .line{
+    flex:1;
+    height:2px;
+    background: linear-gradient(to left, #f7971e, transparent);
+}
+
+/* کارت‌ها مثل لیست Artists */
+.home-card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius:16px;
+    padding:14px 16px;
+    text-decoration:none;
+    transition: all .25s ease;
+}
+.home-card:hover{
+    background: rgba(247,151,30,0.08);
+    border-color: rgba(247,151,30,0.3);
+    text-decoration:none;
+}
+.home-card .icon{
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    flex-shrink:0;
+
+    background: rgba(247,151,30,0.10);
+    border:2px solid rgba(247,151,30,0.25);
+    color:#ffd200;
+    font-size:22px;
+}
+.home-card .info{ flex:1; min-width:0; }
+.home-card .title{
+    color:#fff;
+    font-weight:800;
+    margin:0;
+    font-size:1rem;
+}
+.home-card .meta{
+    margin-top:4px;
+    color: rgba(255,255,255,0.5);
+    font-size:13px;
+}
+.home-card .chev{
+    color: rgba(255,255,255,0.35);
+    font-size:22px;
+    line-height:1;
+}
+
+@media (max-width: 767.98px){
+    .home-hero{ height:54vh; min-height:320px; padding-top:60px; }
+    .home-title{ font-size:2.0rem; }
+    .home-subtitle{ font-size:0.85rem; letter-spacing:2px; }
 }
 </style>
 
-<div class="page-wrapper">
-    <div class="hero-section">
-        <div class="hero-badge">Premium Music</div>
-        <h1 class="hero-title">VIBE MUSIC</h1>
-        <div class="hero-subtitle">Discover New Music</div>
-        <a href="{% url 'discover' %}" class="btn-hero no-ajax">Explore Music</a>
+<section class="home-hero">
+    <div class="home-hero-content">
+        <div class="home-badge">Premium Music</div>
+        <h1 class="home-title">VIBE MUSIC</h1>
+        <p class="home-subtitle">Discover New Music</p>
+        <a class="home-cta no-ajax" href="{% url 'discover' %}">Explore Music</a>
+    </div>
+</section>
+
+<section class="home-wrap">
+    <div class="section-title">
+        <span>Explore</span><span class="line"></span>
     </div>
 
-    <div class="artists-section">
-        <h2>Artists on Vibe Music</h2>
-        <p>Find your favorite artists and listen to their music on Vibe Music. Create your own playlist while listening to them.</p>
-        <a href="{% url 'artists' %}" class="btn-artists no-ajax">Browse Artists</a>
-    </div>
-</div>
+    <a class="home-card no-ajax" href="{% url 'artists' %}">
+        <div class="icon">🏆</div>
+        <div class="info">
+            <div class="title">Artists</div>
+            <div class="meta">Browse artists and their tracks</div>
+        </div>
+        <div class="chev">›</div>
+    </a>
+
+    <div style="height:12px;"></div>
+
+    <a class="home-card no-ajax" href="{% url 'genres' %}">
+        <div class="icon">♫</div>
+        <div class="info">
+            <div class="title">Genres</div>
+            <div class="meta">Find music by mood and style</div>
+        </div>
+        <div class="chev">›</div>
+    </a>
+</section>
 {% endblock %}

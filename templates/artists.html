@@ -37,6 +37,19 @@ body, html {
     z-index: 0;
 }
 
+/* background-attachment:fixed is buggy/janky on most mobile browsers,
+   so on small screens just let it scroll normally with the page. */
+@media (max-width: 991.98px) {
+    .page-wrapper-bg {
+        position: absolute;
+        min-height: 100%;
+        background-attachment: scroll;
+    }
+    body, html {
+        position: relative;
+    }
+}
+
 .page-wrapper-bg::after {
     content: '';
     position: absolute;
@@ -243,7 +256,180 @@ body, html {
     .footer-links { justify-content: center; }
 }
 /* ===== MOBILE NAVBAR ===== */
-@media(max-width:991.98px){.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important;animation:mobileMenuIn .3s ease}@keyframes mobileMenuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
+@media (max-width: 991.98px) {
+
+    #header .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+    }
+
+    /* Keep only logo + dots button visible in the top bar on mobile.
+       Everything else (links, search, sign in/up) lives inside the
+       slide-down panel instead of being squeezed into the top row. */
+    .navbar-menu > li:not(.mobile-toggle-item) {
+        display: none !important;
+    }
+
+    .mobile-toggle-item {
+        display: flex !important;
+    }
+
+    .mobile-toggle-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.1);
+        color: #fff !important;
+        transition: background .2s ease;
+    }
+
+    .mobile-toggle-btn.active,
+    .mobile-toggle-btn:hover {
+        background: rgba(247,151,30,0.18);
+        border-color: rgba(247,151,30,0.4);
+    }
+
+    .navbar-collapse {
+        position: fixed;
+        top: 60px;
+        left: 12px;
+        right: 12px;
+        background: rgba(15,15,25,.98) !important;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(247,151,30,.2);
+        border-radius: 18px;
+        padding: 18px;
+        z-index: 9999;
+        box-shadow: 0 20px 50px rgba(0,0,0,.55);
+        display: none;
+        max-height: calc(100vh - 90px);
+        overflow-y: auto;
+    }
+
+    .navbar-collapse.show {
+        display: block !important;
+        animation: mobileMenuIn .25s ease;
+    }
+
+    @keyframes mobileMenuIn {
+        from { opacity: 0; transform: translateY(-12px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 4px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .navbar-nav .nav-item { width: 100%; }
+
+    .navbar-nav .nav-link {
+        padding: 13px 16px !important;
+        border-radius: 12px;
+        font-size: 15px;
+        display: block;
+        width: 100%;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active {
+        background: rgba(247,151,30,.12) !important;
+        color: #f7971e !important;
+    }
+
+    .navbar .input-group {
+        max-width: 100% !important;
+        margin: 4px 0 14px !important;
+        background: rgba(255,255,255,0.05);
+        border-radius: 12px;
+        padding: 4px 10px;
+    }
+
+    .mobile-menu-divider {
+        height: 1px;
+        background: rgba(255,255,255,0.08);
+        margin: 10px 0 14px;
+    }
+
+    .mobile-auth-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mobile-auth-row a {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .mobile-auth-row .btn-signin {
+        color: #fff !important;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .mobile-auth-row .btn-signup {
+        background: linear-gradient(135deg,#f7971e,#ffd200);
+        color: #1a1a2e !important;
+    }
+
+    .mobile-profile-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 4px 14px;
+    }
+
+    .mobile-profile-row img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .mobile-profile-row .mp-name {
+        color: #fff;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .mobile-profile-row .mp-logout {
+        margin-left: auto;
+        color: #f7971e !important;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .footer-horizontal { flex-direction: column; text-align: center; gap: 15px; }
+    .footer-links { justify-content: center; gap: 15px; }
+    .footer-social { justify-content: center; }
+
+    /* Space content below the fixed header so it never overlaps */
+    #main { padding-top: 74px; }
+
+    .artist-card { padding: 16px; }
+    .artist-card .avatar img { width: 64px; height: 64px; }
+    .artist-card .artist-name { font-size: 0.9rem; }
+}
+
+@media (max-width: 420px) {
+    .artist-card { padding: 14px 10px; }
+    .artist-card .avatar img { width: 56px; height: 56px; }
+}
 </style>
 </head>
 <body class="layout-column">
@@ -269,6 +455,27 @@ body, html {
                 <span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span>
                 <input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." autocomplete="off" style="color:#fff;">
             </form>
+
+            <!-- Mobile-only: sign in/up or profile, shown inside the slide-down panel -->
+            <div class="d-lg-none mobile-menu-divider"></div>
+            {% if auth_user %}
+            <div class="d-lg-none mobile-profile-row">
+                <a href="{% url 'profile' %}" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+                    {% if auth_user.profile_image %}
+                    <img src="{{ auth_user.profile_image.url }}" alt="{{ auth_user.username }}">
+                    {% else %}
+                    <img src="{% static 'assets/img/images (5).jpg' %}" alt="{{ auth_user.username }}">
+                    {% endif %}
+                    <span class="mp-name">{{ auth_user.username }}</span>
+                </a>
+                <a href="{% url 'logout' %}" class="mp-logout">Logout</a>
+            </div>
+            {% else %}
+            <div class="d-lg-none mobile-auth-row">
+                <a href="{% url 'signin' %}" class="btn-signin no-ajax">Sign In</a>
+                <a href="{% url 'signup' %}" class="btn-signup no-ajax">Sign Up</a>
+            </div>
+            {% endif %}
         </div>
         <ul class="nav navbar-menu order-1 order-lg-2">
             <li class="nav-item d-none d-sm-block"><a class="nav-link px-2" data-toggle="fullscreen" data-plugin="fullscreen"><i data-feather="maximize"></i></a></li>
@@ -290,7 +497,11 @@ body, html {
             <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
             <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
             {% endif %}
-            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+            <li class="nav-item d-lg-none mobile-toggle-item">
+                <a href="#" class="mobile-toggle-btn" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse">
+                    <i data-feather="more-vertical"></i>
+                </a>
+            </li>
         </ul>
     </div>
 </header>

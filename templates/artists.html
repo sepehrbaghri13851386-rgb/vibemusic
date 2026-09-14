@@ -154,9 +154,17 @@ body, html {
 }
 
 .artist-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Mobile: one artist per row */
+@media (max-width: 767.98px) {
+    .artist-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
 }
 
 .artist-list-item {

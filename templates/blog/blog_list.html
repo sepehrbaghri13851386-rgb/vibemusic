@@ -23,6 +23,21 @@
 #page-content .list-row div { background:linear-gradient(135deg,#f7971e,#ffd200); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 #page-content svg[stroke="#666"] { stroke:#f7971e !important; }
 #page-content .list-item div { background:linear-gradient(135deg,#f7971e,#ffd200); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.blog-thumb-square {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.05);
+}
+.blog-thumb-square .media-content {
+    position: absolute;
+    inset: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 </style>
 <div class="page-hero">
 <div class="media bg-media" style="background-image:url('{% static "assets/img/images (1).jpg" %}')"></div>
@@ -35,7 +50,7 @@
 {% for blog in blogs %}
 <div class="col-sm-6 mb-5" data-id="{{ blog.id }}" data-category="{{ blog.title|slugify }}">
 <div class="list-item r">
-<div class="media media-16x9">
+<div class="media blog-thumb-square">
 <a href="{% url 'blog:blog_detail' blog.pk %}" class="ajax media-content " style="background-image:url('{% if blog.image %}{{ blog.image.url }}{% else %}{% static 'assets/img/c0.jpg' %}{% endif %}')"></a><div class="media-action "></div>
 </div>
 <div class="list-content ">

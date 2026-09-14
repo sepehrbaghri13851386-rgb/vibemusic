@@ -107,7 +107,7 @@
 <li class="nav-item"><a href="{% url 'charts' %}" class="nav-link"><span class="nav-text">Charts</span></a></li>
 <li class="nav-item"><a href="{% url 'genres' %}" class="nav-link"><span class="nav-text">Genres</span></a></li>
 <li class="nav-item"><a href="{% url 'artists' %}" class="nav-link"><span class="nav-text">Artists</span></a></li>
-<a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a>
+<li class="nav-item"><a href="{% url 'blog:blog_list' %}" class="nav-link"><span class="nav-text">Blog</span></a></li>
 </ul>
 <form class="input-group m-2 my-lg-0 no-ajax" action="{% url 'search' %}" method="GET" style="max-width:300px;">
 <span class="input-group-prepend"><button type="submit" class="btn no-shadow no-bg px-0" style="cursor:pointer;"><i data-feather="search"></i></button></span><input type="text" name="q" class="form-control no-border no-shadow no-bg" placeholder="Search..." value="{{ query|default:'' }}" autocomplete="off">

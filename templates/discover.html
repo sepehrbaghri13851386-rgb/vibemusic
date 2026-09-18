@@ -412,8 +412,8 @@ body, html {
     .footer-horizontal { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
 }
-/* ===== MOBILE NAVBAR ===== */
-@media(max-width:991.98px){.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important;animation:mobileMenuIn .3s ease}@keyframes mobileMenuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
+/* Mobile: logo+menu on RIGHT */
+@media(max-width:991.98px){.navbar{flex-wrap:nowrap!important;justify-content:flex-end!important}.navbar-brand{order:1!important;margin-right:0!important}.navbar-menu{order:0!important;flex-direction:row!important}.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
 </style>
 </head>
 <body class="layout-column">
@@ -460,7 +460,7 @@ body, html {
             <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
             <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
             {% endif %}
-            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2 d-flex align-items-center" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse" style="font-size:24px;">☰</a></li>
+            <li class="nav-item d-lg-none"><a href="#" id="mobileToggle" class="nav-link px-2 d-flex align-items-center" style="font-size:24px;">☰</a></li>
         </ul>
     </div>
 </header>
@@ -666,7 +666,7 @@ closeBtn.addEventListener('click', stopTrack);
 audio.addEventListener('ended', stopTrack);
 </script>
 <script>
-(function(){document.addEventListener('DOMContentLoaded',function(){var t=document.querySelector('[data-target="#navbarCollapse"]'),c=document.getElementById('navbarCollapse'),fh=document.getElementById('mobileHamburger');function m(){if(c)c.classList.toggle('show');if(t)t.classList.toggle('active');if(fh)fh.classList.toggle('active');}if(fh)fh.addEventListener('click',function(e){e.preventDefault();m();});if(t)t.addEventListener('click',function(e){e.preventDefault();m();});if(c){document.addEventListener('click',function(e){if(!c.contains(e.target)&&!t.contains(e.target)&&e.target!==fh&&!fh.contains(e.target)){c.classList.remove('show');if(t)t.classList.remove('active');if(fh)fh.classList.remove('active');}});c.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){c.classList.remove('show');if(t)t.classList.remove('active');if(fh)fh.classList.remove('active');});});}})();
+document.addEventListener('DOMContentLoaded',function(){var toggle=document.getElementById('mobileToggle');var collapse=document.getElementById('navbarCollapse');if(toggle&&collapse){toggle.addEventListener('click',function(e){e.preventDefault();collapse.classList.toggle('show');});document.addEventListener('click',function(e){if(!collapse.contains(e.target)&&!toggle.contains(e.target)){collapse.classList.remove('show');}});collapse.querySelectorAll('.nav-link').forEach(function(link){link.addEventListener('click',function(){collapse.classList.remove('show');});});}});
 </script>
 </body>
 </html>

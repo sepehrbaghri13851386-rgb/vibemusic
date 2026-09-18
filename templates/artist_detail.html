@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html dir="ltr" lang="en-US">
+<html dir="rtl" lang="en-US">
 <head>
 <meta charset="utf-8">
 <title>{{ artist.name }} | Vibe Music - برنامه وب موسیقی</title>
@@ -235,9 +235,8 @@
         position: relative;
         z-index: 2;
     }
-/* Mobile: logo+menu on RIGHT */
-@media(max-width:991.98px){.navbar{flex-wrap:nowrap!important;justify-content:flex-end!important}.navbar-brand{order:1!important;margin-right:0!important}.navbar-menu{order:0!important;flex-direction:row!important}.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
-@media(max-width:991.98px){.navbar-collapse.show ~ .page-wrapper-bg{z-index:auto}}
+/* ===== MOBILE NAVBAR ===== */
+@media(max-width:991.98px){.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important;animation:mobileMenuIn .3s ease}@keyframes mobileMenuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
 </style>
 </head>
 <body class="layout-column bg-dark">
@@ -246,9 +245,9 @@
 
 <header id="header" class="page-header fixed">
     <div class="navbar navbar-expand-lg">
-        <a href="{% url 'home' %}" class="navbar-brand text-white d-flex align-items-center" style="gap:8px;">
-            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(247,151,30,0.5);">
-            <span class="hidden-folded d-inline l-s-n-1x" style="font-weight:700;font-size:1.1rem;">Vibe Music</span>
+        <a href="{% url 'home' %}" class="navbar-brand text-white">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
         </a>
         <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
             <ul class="navbar-nav" data-nav>
@@ -280,7 +279,7 @@
 <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
 <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm btn-primary no-ajax" href="{% url 'signup' %}">Sign Up</a></li>
 {% endif %}
-            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2 d-flex align-items-center" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse" id="mobileToggle" style="font-size:24px;">☰</a></li>
+            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
         </ul>
     </div>
 </header>
@@ -609,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded',function(){var toggle=document.getElementById('mobileToggle');var collapse=document.getElementById('navbarCollapse');if(toggle&&collapse){toggle.addEventListener('click',function(e){e.preventDefault();collapse.classList.toggle('show');});document.addEventListener('click',function(e){if(!collapse.contains(e.target)&&!toggle.contains(e.target)){collapse.classList.remove('show');}});collapse.querySelectorAll('.nav-link').forEach(function(link){link.addEventListener('click',function(){collapse.classList.remove('show');});});}});
+(function(){document.addEventListener('DOMContentLoaded',function(){var t=document.querySelector('[data-target="#navbarCollapse"]'),c=document.getElementById('navbarCollapse');if(t&&c){t.addEventListener('click',function(e){e.preventDefault();c.classList.toggle('show');this.classList.toggle('active')});document.addEventListener('click',function(e){if(!c.contains(e.target)&&!t.contains(e.target)){c.classList.remove('show');t.classList.remove('active')}});c.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){c.classList.remove('show');t.classList.remove('active')})})}})();
 </script>
 </body>
 </html>

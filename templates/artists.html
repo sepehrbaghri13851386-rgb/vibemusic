@@ -487,16 +487,15 @@ body, html {
 @media (max-width: 420px) {
     .artist-list-item .ali-avatar img { width: 42px; height: 42px; }
 }
-@media(max-width:991.98px){.navbar{flex-wrap:nowrap!important;justify-content:flex-end!important}.navbar-brand{order:1!important;margin-right:0!important}.navbar-menu{order:0!important;flex-direction:row!important}.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,0.97)!important;backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,0.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,0.5);display:none}.navbar-collapse.show{display:block!important}.navbar-collapse.show ~ .page-wrapper-bg{z-index:auto}}
 </style>
 </head>
 <body class="layout-column">
 
 <header id="header" class="page-header scroll-header fixed">
     <div class="navbar navbar-expand-lg">
-        <a href="{% url 'home' %}" class="navbar-brand text-white d-flex align-items-center" style="gap:8px;">
-            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(247,151,30,0.5);">
-            <span class="hidden-folded d-inline l-s-n-1x" style="font-weight:700;font-size:1.1rem;">Vibe Music</span>
+        <a href="{% url 'home' %}" class="navbar-brand text-white">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
+            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
         </a>
         <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
             <ul class="navbar-nav" data-nav>
@@ -554,7 +553,9 @@ body, html {
             <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
             {% endif %}
             <li class="nav-item d-lg-none mobile-toggle-item">
-                <a href="#" id="mobileToggle" class="nav-link px-2 d-flex align-items-center" style="font-size:24px;">☰</a>
+                <a href="#" class="mobile-toggle-btn" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </a>
             </li>
         </ul>
     </div>
@@ -651,26 +652,31 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
+(function(){
 document.addEventListener('DOMContentLoaded', function(){
-    var toggle = document.getElementById('mobileToggle');
-    var collapse = document.getElementById('navbarCollapse');
-    if(toggle && collapse){
-        toggle.addEventListener('click', function(e){
+    var t = document.querySelector('[data-target="#navbarCollapse"]');
+    var c = document.getElementById('navbarCollapse');
+    if (t && c) {
+        t.addEventListener('click', function(e){
             e.preventDefault();
-            collapse.classList.toggle('show');
+            c.classList.toggle('show');
+            this.classList.toggle('active');
         });
         document.addEventListener('click', function(e){
-            if(!collapse.contains(e.target) && !toggle.contains(e.target)){
-                collapse.classList.remove('show');
+            if (!c.contains(e.target) && !t.contains(e.target)) {
+                c.classList.remove('show');
+                t.classList.remove('active');
             }
         });
-        collapse.querySelectorAll('.nav-link').forEach(function(link){
-            link.addEventListener('click', function(){
-                collapse.classList.remove('show');
+        c.querySelectorAll('.nav-link').forEach(function(l){
+            l.addEventListener('click', function(){
+                c.classList.remove('show');
+                t.classList.remove('active');
             });
         });
     }
 });
+})();
 </script>
 </body>
 </html>

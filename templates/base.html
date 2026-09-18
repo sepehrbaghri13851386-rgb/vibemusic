@@ -96,60 +96,21 @@
 .hamburger-btn.active {
     background: rgba(247, 151, 30, 0.15);
 }
-/* Fixed hamburger on LEFT side for mobile */
-.mobile-hamburger-fixed {
-    display: none;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 10001;
-    width: 42px;
-    height: 42px;
-    background: rgba(15, 15, 25, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(247, 151, 30, 0.3);
-    border-radius: 10px;
-    color: #fff;
-    font-size: 22px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-}
-.mobile-hamburger-fixed.active {
-    background: rgba(247, 151, 30, 0.25);
-    border-color: rgba(247, 151, 30, 0.6);
-}
+/* Mobile navbar adjustments */
 @media (max-width: 991.98px) {
-    .mobile-hamburger-fixed {
-        display: flex;
-    }
-    /* Hide old hamburger inside navbar on mobile */
-    .navbar-menu .d-lg-none {
-        display: none !important;
-    }
-    /* Push navbar brand to the right to make room for fixed hamburger */
-    .navbar {
-        padding-left: 55px !important;
-    }
     .navbar-collapse {
         left: 0;
         right: 0;
+    }
+    .navbar-menu .d-lg-none {
+        display: flex !important;
     }
 }
 </style>
 </head>
 <body class="layout-column bg-dark">
-
-<!-- Fixed hamburger button - LEFT side on mobile -->
-<button class="mobile-hamburger-fixed" id="mobileHamburger">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-</button>
-
 <header id="header" class="page-header {% block header_class %}fixed{% endblock %}"><div class="navbar navbar-expand-lg">
-<a href="{% url 'home' %}" class="navbar-brand text-white "><img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;"><span class="hidden-folded d-inline l-s-n-1x ">Vibe Music</span></a><div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
+<a href="{% url 'home' %}" class="navbar-brand text-white d-flex align-items-center" style="gap:8px;"><img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(247,151,30,0.5);"><span class="hidden-folded d-inline l-s-n-1x" style="font-weight:700;font-size:1.1rem;">Vibe Music</span></a><div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
 <ul class="navbar-nav" data-nav>
 <li class="nav-item"><a href="{% url 'home' %}" class="nav-link"><span class="nav-text">Home</span></a></li>
 <li class="nav-item"><a href="{% url 'discover' %}" class="nav-link"><span class="nav-text">Discover</span></a></li>
@@ -182,7 +143,7 @@
 <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
 <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
 {% endif %}
-<li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+<li class="nav-item d-lg-none"><a href="#" class="nav-link px-2 d-flex align-items-center" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse" style="font-size:24px;">☰</a></li>
 </ul>
 </div></header>
 
@@ -241,27 +202,22 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('DOMContentLoaded', function(){
         var toggle = document.querySelector('[data-target="#navbarCollapse"]');
         var target = document.getElementById('navbarCollapse');
-        var fixedHam = document.getElementById('mobileHamburger');
         function openClose(){
             if(target){target.classList.toggle('show');}
             if(toggle){toggle.classList.toggle('active');}
-            if(fixedHam){fixedHam.classList.toggle('active');}
         }
-        if(fixedHam){fixedHam.addEventListener('click', function(e){e.preventDefault();openClose();});}
         if(toggle){toggle.addEventListener('click', function(e){e.preventDefault();openClose();});}
         if(target){
             document.addEventListener('click', function(e){
-                if(!target.contains(e.target) && !toggle.contains(e.target) && e.target !== fixedHam && !fixedHam.contains(e.target)){
+                if(!target.contains(e.target) && !toggle.contains(e.target)){
                     target.classList.remove('show');
                     if(toggle){toggle.classList.remove('active');}
-                    if(fixedHam){fixedHam.classList.remove('active');}
                 }
             });
             target.querySelectorAll('.nav-link').forEach(function(link){
                 link.addEventListener('click', function(){
                     target.classList.remove('show');
                     if(toggle){toggle.classList.remove('active');}
-                    if(fixedHam){fixedHam.classList.remove('active');}
                 });
             });
         }

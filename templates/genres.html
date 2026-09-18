@@ -177,19 +177,15 @@
     }
 /* ===== MOBILE NAVBAR ===== */
 @media(max-width:991.98px){.navbar-collapse{position:absolute;top:100%;left:0;right:0;background:rgba(15,15,25,.97)!important;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(247,151,30,.2);padding:15px 20px;z-index:9999;box-shadow:0 15px 40px rgba(0,0,0,.5);display:none}.navbar-collapse.show{display:block!important;animation:mobileMenuIn .3s ease}@keyframes mobileMenuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.navbar-nav{flex-direction:column;gap:4px;padding:0;margin:0}.navbar-nav .nav-item{width:100%}.navbar-nav .nav-link{padding:12px 16px!important;border-radius:10px;font-size:15px;display:block;width:100%}.navbar-nav .nav-link:hover{background:rgba(247,151,30,.12)!important;color:#f7971e!important}.navbar .input-group{max-width:100%!important;margin:10px 0 5px!important}.navbar .navbar-menu{gap:5px}.footer-horizontal{flex-direction:column;text-align:center;gap:15px}.footer-links{justify-content:center;gap:15px}.footer-social{justify-content:center}}
-.mobile-hamburger-fixed{display:none;position:fixed;top:15px;left:15px;z-index:10001;width:42px;height:42px;background:rgba(15,15,25,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(247,151,30,0.3);border-radius:10px;color:#fff;font-size:22px;cursor:pointer;align-items:center;justify-content:center;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,0,0,0.4)}.mobile-hamburger-fixed.active{background:rgba(247,151,30,0.25);border-color:rgba(247,151,30,0.6)}@media(max-width:991.98px){.mobile-hamburger-fixed{display:flex}}
 </style>
 </head>
 <body class="layout-column bg-dark">
 
-<button class="mobile-hamburger-fixed" id="mobileHamburger">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-</button>
-
 <header id="header" class="page-header scroll-header fixed">
     <div class="navbar navbar-expand-lg">
-        <a href="{% url 'home' %}" class="navbar-brand text-white"><img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:28px;height:28px;border-radius:50%;object-fit:cover;">
-            <span class="hidden-folded d-inline l-s-n-1x">Vibe Music</span>
+        <a href="{% url 'home' %}" class="navbar-brand text-white d-flex align-items-center" style="gap:8px;">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="Vibe Music" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid rgba(247,151,30,0.5);">
+            <span class="hidden-folded d-inline l-s-n-1x" style="font-weight:700;font-size:1.1rem;">Vibe Music</span>
         </a>
         <div class="collapse navbar-collapse order-2 order-lg-1" id="navbarCollapse">
             <ul class="navbar-nav" data-nav>
@@ -225,7 +221,7 @@
 <li class="nav-item"><a class="nav-link no-ajax" href="{% url 'signin' %}">Sign In</a></li>
 <li class="d-flex align-items-center"><a class="btn btn-rounded btn-sm no-ajax" href="{% url 'signup' %}" style="background:linear-gradient(135deg,#f7971e,#ffd200);color:#1a1a2e;border:none;font-weight:600;">Sign Up</a></li>
 {% endif %}
-            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse"><i data-feather="menu"></i></a></li>
+            <li class="nav-item d-lg-none"><a href="#" class="nav-link px-2 d-flex align-items-center" data-toggle="collapse" data-toggle-class data-target="#navbarCollapse" style="font-size:24px;">☰</a></li>
         </ul>
     </div>
 </header>

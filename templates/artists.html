@@ -487,9 +487,17 @@ body, html {
 @media (max-width: 420px) {
     .artist-list-item .ali-avatar img { width: 42px; height: 42px; }
 }
+/* Fixed hamburger LEFT */
+.mobile-hamburger-fixed{display:none;position:fixed;top:15px;left:15px;z-index:10001;width:42px;height:42px;background:rgba(15,15,25,0.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(247,151,30,0.3);border-radius:10px;color:#fff;font-size:22px;cursor:pointer;align-items:center;justify-content:center;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,0,0,0.4)}
+.mobile-hamburger-fixed.active{background:rgba(247,151,30,0.25);border-color:rgba(247,151,30,0.6)}
+@media(max-width:991.98px){.mobile-hamburger-fixed{display:flex}.navbar-collapse.show ~ .page-wrapper-bg{z-index:auto}}
 </style>
 </head>
 <body class="layout-column">
+
+<button class="mobile-hamburger-fixed" id="mobileHamburger">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+</button>
 
 <header id="header" class="page-header scroll-header fixed">
     <div class="navbar navbar-expand-lg">
@@ -656,25 +664,11 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function(){
     var t = document.querySelector('[data-target="#navbarCollapse"]');
     var c = document.getElementById('navbarCollapse');
-    if (t && c) {
-        t.addEventListener('click', function(e){
-            e.preventDefault();
-            c.classList.toggle('show');
-            this.classList.toggle('active');
-        });
-        document.addEventListener('click', function(e){
-            if (!c.contains(e.target) && !t.contains(e.target)) {
-                c.classList.remove('show');
-                t.classList.remove('active');
-            }
-        });
-        c.querySelectorAll('.nav-link').forEach(function(l){
-            l.addEventListener('click', function(){
-                c.classList.remove('show');
-                t.classList.remove('active');
-            });
-        });
-    }
+    var fh = document.getElementById('mobileHamburger');
+    function toggleMenu(){if(c)c.classList.toggle('show');if(t)t.classList.toggle('active');if(fh)fh.classList.toggle('active');}
+    if(fh)fh.addEventListener('click',function(e){e.preventDefault();toggleMenu();});
+    if(t)t.addEventListener('click',function(e){e.preventDefault();toggleMenu();});
+    if(c){document.addEventListener('click',function(e){if(!c.contains(e.target)&&!t.contains(e.target)&&e.target!==fh&&!fh.contains(e.target)){c.classList.remove('show');if(t)t.classList.remove('active');if(fh)fh.classList.remove('active');}});c.querySelectorAll('.nav-link').forEach(function(l){l.addEventListener('click',function(){c.classList.remove('show');if(t)t.classList.remove('active');if(fh)fh.classList.remove('active');});});}
 });
 })();
 </script>
